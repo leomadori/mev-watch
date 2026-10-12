@@ -307,7 +307,7 @@ function main() {
         el("td", "num", usd(b.gross_usd)), el("td", "num", usd(b.gas_usd)),
         el("td", "num " + (net >= 0 ? "pos" : "neg"), usd(net)),
         el("td", "num", b.gross_usd > 0 ? Math.round(100 * net / b.gross_usd) + "%" : "—"));
-      if (b.unpriced) tr.title = `${b.unpriced} sandwich(es) in tokens without a USD price are not included in the $ columns`;
+      if (b.unpriced) tr.title = `${b.unpriced} sandwich(es) without a dollar value (other tokens, or complex multi-pool trades) are not included in the $ columns`;
       t.append(tr);
     });
   }
@@ -340,7 +340,7 @@ function main() {
       const tr = el("tr"), bot = el("td"), txs = el("td");
       bot.append(link(ES + "address/" + s.bot, short(s.bot)));
       txs.append(link(ES + "tx/" + s.front, "front"), " · ", link(ES + "tx/" + s.victims[0], "victim"), " · ", link(ES + "tx/" + s.back, "back"));
-      const gain = s.gross_usd != null ? usd(s.gross_usd) : `${s.profit_amount.toLocaleString("en-US", { notation: "compact", maximumSignificantDigits: 3 })} ${s.profit_token}`;
+      const gain = s.gross_usd != null ? usd(s.gross_usd) : s.complex ? "complex" : `${s.profit_amount.toLocaleString("en-US", { notation: "compact", maximumSignificantDigits: 3 })} ${s.profit_token}`;
       const left = s.gross_usd != null ? s.gross_usd - (s.gas_usd || 0) : null;
       tr.append(el("td", null, new Date(s.time).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })),
         el("td", null, s.pair), bot, el("td", "num", s.victims.length), el("td", "num", gain), el("td", "num", usd(s.gas_usd)),
@@ -360,7 +360,9 @@ function main() {
      + "(Uniswap, SushiSwap and forks); Uniswap V4, Curve, Balancer and multi-pool sandwiches are not detected.",
    "“Gas” is everything the bot paid in transaction fees, including the priority tip that goes to the builder. "
      + "Some bots also pay builders with a direct transfer, which is not visible here, so real profits are lower than shown.",
-   "Only gains in ETH, USDC, USDT or DAI get a dollar value; others show the token amount.",
+   "Only gains in ETH, USDC, USDT or DAI get a dollar value; others show the token amount. \u201CComplex\u201D means the bot "
+     + "also traded other pools in the same transaction, so its gain can't be read from this pool alone. "
+     + "Transactions that add or remove liquidity (\u201Cjust-in-time liquidity\u201D, a different strategy) are not counted.",
    "Failed or outbid sandwich attempts never reach the chain, so the cost of competing is not visible.",
    "Gas tiles are read live from a public Ethereum node (publicnode.com); ETH price from CoinGecko."]
     .forEach((t) => ul.append(el("li", null, t)));

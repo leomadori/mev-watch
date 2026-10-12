@@ -33,6 +33,11 @@ KEEP_DAYS = 30
 
 SWAP_V2 = "0xd78ad95fa46c994b6551d0da85fc275fe613ce37657fb8d5e3d130840159d822"
 SWAP_V3 = "0xc42079f94a6350d7e6235f29174924f928cc2ac818eb64fed8004e115fbcca67"
+# Adding/removing liquidity in the same tx is "just-in-time liquidity", a different strategy: not a sandwich.
+LIQUIDITY = {"0x7a53080ba414158be7ec69b987b5fb7d07dee101fe85488f0853ae16239d0bde",   # V3 Mint
+             "0x0c396cd989a39f4459b5fa1aed6a9a8dcdbc45908acfd67e028cd568da98982c",   # V3 Burn
+             "0x4c209b5fc8ad50758f13e2e1088ba56a560dff690a1c6fef26394f4c03821c4f",   # V2 Mint
+             "0xdccd412f0b1252819cb1fd330b93224ca42612892bb3f4f789976e6d81936496"}   # V2 Burn
 WETH = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
 STABLES = {"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48": "USDC", "0xdac17f958d2ee523a2206206994597c13d831ec7": "USDT",
            "0x6b175474e89094c44da98b954eedeac495271d0f": "DAI"}
@@ -136,6 +141,8 @@ def pool_swaps(receipts):
         if r.get("status") != "0x1":
             continue
         idx = int(r["transactionIndex"], 16)
+        liq = {lg["address"].lower() for lg in r["logs"] if lg["topics"] and lg["topics"][0] in LIQUIDITY}
+        swapped = {lg["address"].lower() for lg in r["logs"] if lg["topics"] and lg["topics"][0] in (SWAP_V2, SWAP_V3)}
         for lg in r["logs"]:
             t = lg["topics"]
             if not t or t[0] not in (SWAP_V2, SWAP_V3):
@@ -150,7 +157,8 @@ def pool_swaps(receipts):
                 continue
             s = pools[lg["address"].lower()].setdefault(idx, {
                 "i": idx, "hash": r["transactionHash"], "from": r["from"].lower(), "to": (r.get("to") or "").lower(),
-                "gas_eth": int(r["gasUsed"], 16) * int(r.get("effectiveGasPrice", "0x0"), 16) / 1e18, "d0": 0, "d1": 0})
+                "gas_eth": int(r["gasUsed"], 16) * int(r.get("effectiveGasPrice", "0x0"), 16) / 1e18, "d0": 0, "d1": 0,
+                "liq": lg["address"].lower() in liq, "multi": len(swapped) > 1})
             s["d0"] += d0
             s["d1"] += d1
     return {p: sorted(v.values(), key=lambda s: s["i"]) for p, v in pools.items()}
@@ -170,12 +178,12 @@ def find_sandwiches(swaps, shared):
     going the same way as the front-run."""
     found, used = [], set()
     for a_k, a in enumerate(swaps):
-        if a["i"] in used or a["d0"] == 0:
+        if a["i"] in used or a["d0"] == 0 or a["liq"]:
             continue
         sells0 = a["d0"] > 0
         for c in swaps[a_k + 1:]:
             same_bot = c["from"] == a["from"] or (a["to"] and c["to"] == a["to"] and a["to"] not in shared)
-            if not same_bot or (c["d0"] > 0) == sells0 or c["d0"] == 0:
+            if not same_bot or (c["d0"] > 0) == sells0 or c["d0"] == 0 or c["liq"]:
                 continue
             # Amount of the "bought" token: front-run received it, back-run sold it back.
             got = -a["d1"] if sells0 else -a["d0"]
@@ -239,8 +247,12 @@ def scan(start, end, eth_usd, cache):
         delta = (-c["d0"] - a["d0"]) if sells0 else (-c["d1"] - a["d1"])
         sym, dec = cache["tokens"].get(start_tok, ["?", 18]) if start_tok else ["?", 18]
         amount = delta / 10 ** dec
+        # If the bot also traded other pools in the same tx, this pool alone doesn't show its real gain.
+        complex_ = a["multi"] or c["multi"]
         gross = None
-        if start_tok == WETH and eth_usd:
+        if complex_:
+            pass
+        elif start_tok == WETH and eth_usd:
             gross = amount * eth_usd
         elif start_tok in STABLES:
             gross = amount
@@ -250,7 +262,7 @@ def scan(start, end, eth_usd, cache):
             "block": n, "time": datetime.fromtimestamp(ts, timezone.utc).isoformat(timespec="seconds"),
             "pool": pool, "pair": pair, "bot": a["from"] if a["to"] in shared or not a["to"] else a["to"], "bot_eoa": a["from"],
             "front": a["hash"], "back": c["hash"], "victims": [v["hash"] for v in victims],
-            "profit_token": sym, "profit_amount": round(amount, 8),
+            "profit_token": sym, "profit_amount": round(amount, 8), "complex": complex_,
             "gross_usd": round(gross, 2) if gross is not None else None,
             "gas_usd": round(gas_usd, 2) if gas_usd is not None else None,
         })

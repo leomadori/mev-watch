@@ -28,7 +28,7 @@ One early finding: most bots hand almost all of their gain to the block builder 
 2. at least one other trader then swaps the same pool in the same direction,
 3. the bot then sells back roughly what it bought (within 10%).
 
-Contracts used by several different wallets in the same block (routers and aggregators) don't count as a bot. Gains in ETH, USDC, USDT or DAI are converted to dollars with the ETH price from CoinGecko.
+Contracts used by several different wallets in the same block (routers and aggregators) don't count as a bot. Transactions that also add or remove liquidity in the pool ("just-in-time liquidity", a different strategy) are skipped. If the bot traded other pools in the same transaction, the sandwich is counted but its gain is shown as "complex", because this pool alone doesn't show what it made. Gains in ETH, USDC, USDT or DAI are converted to dollars with the ETH price from CoinGecko.
 
 ## Limits
 
