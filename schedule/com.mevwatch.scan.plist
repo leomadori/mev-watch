@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <!-- Scan new Ethereum blocks + publish, every 2 hours. Installed by schedule/install.sh. -->
+  <key>Label</key>
+  <string>com.mevwatch.scan</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/opt/anaconda3/bin/python3</string>
+    <string>/Users/leonardoreina/Desktop/Claude space/mev-watch/run.py</string>
+  </array>
+  <key>WorkingDirectory</key>
+  <string>/Users/leonardoreina/Desktop/Claude space/mev-watch</string>
+  <key>StartInterval</key>
+  <integer>7200</integer>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PYTHONUNBUFFERED</key>
+    <string>1</string>
+  </dict>
+  <key>StandardOutPath</key>
+  <string>/Users/leonardoreina/Desktop/Claude space/mev-watch/data/run.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/leonardoreina/Desktop/Claude space/mev-watch/data/run.log</string>
+</dict>
+</plist>

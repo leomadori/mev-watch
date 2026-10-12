@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>MEV Watch</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%231a2a6c'/%3E%3Crect x='2' y='4' width='12' height='2' fill='%23e6c9a8'/%3E%3Crect x='2' y='7' width='12' height='2' fill='%23b22222'/%3E%3Crect x='2' y='10' width='12' height='2' fill='%23e6c9a8'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#ffffff">
+<style>
+  /* Late-90s look: Times body, Verdana labels, Windows 95 controls. */
+  :root { --link: #0000ee; --visited: #551a8b; --muted: #555; --red: #b22222; --navy: #1a2a6c; --rust: #a0381c;
+          --green: #1d6b2a; }
+  * { box-sizing: border-box; border-radius: 0 !important; }
+  @supports (-moz-appearance: none) { html { scrollbar-color: #c0c0c0 #dfdfdf; } }
+  ::-webkit-scrollbar { width: 16px; height: 16px; }
+  ::-webkit-scrollbar-track { background: repeating-conic-gradient(#c0c0c0 0 25%, #fff 0 50%) 0 0 / 2px 2px; }
+  ::-webkit-scrollbar-thumb { background: #c0c0c0; border: 2px outset #f4f4f4; box-shadow: inset -1px -1px #808080; }
+  ::-webkit-scrollbar-thumb:active { background: #b4b4b4; }
+  ::-webkit-scrollbar-button:single-button { display: block; height: 16px; width: 16px; background-color: #c0c0c0;
+    border: 2px outset #f4f4f4; background-repeat: no-repeat; background-position: center; background-size: 8px 8px; }
+  ::-webkit-scrollbar-button:single-button:active { border-style: inset; }
+  ::-webkit-scrollbar-button:single-button:vertical:decrement {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M4 2 7 6H1z'/%3E%3C/svg%3E"); }
+  ::-webkit-scrollbar-button:single-button:vertical:increment {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M1 2h6L4 6z'/%3E%3C/svg%3E"); }
+  ::-webkit-scrollbar-corner { background: #c0c0c0; }
+  body { margin: 0; background: #fff; color: #000; font: 17px/1.35 "Times New Roman", Times, Georgia, serif; }
+  a { color: var(--link); } a:visited { color: var(--visited); }
+  .wrap { max-width: 1180px; margin: 0 auto;
+          padding: max(18px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right))
+                   max(40px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left)); }
+  .masthead { text-align: center; padding: 10px 0 6px; }
+  .masthead h1 { margin: 0; font-size: clamp(34px, 7.5vw, 72px); font-weight: 700; letter-spacing: .05em;
+                 color: var(--navy); text-shadow: 3px 3px 0 #c9d3ee; line-height: 1.05; }
+  .masthead .tagline { font-style: italic; color: var(--muted); margin-top: 6px; font-size: 16px; }
+  hr.groove { border: 0; border-top: 2px groove #ccc; margin: 14px 0; }
+  .dateline { font: 12px Verdana, Geneva, sans-serif; color: var(--muted); text-align: center; }
+  .dateline.stale { color: var(--red); font-weight: bold; }
+  .schedule-note { font: 10px Verdana, Geneva, sans-serif; color: #888; text-align: center; margin-top: 2px; }
+  h2 { margin: 30px 0 12px; text-align: center; }
+  h2 span.label { display: inline-block; padding: 4px 14px 3px; background: #fff;
+         border-right: 3px solid #aaa; border-bottom: 3px solid #aaa; box-shadow: 3px 3px 4px rgba(0,0,0,.18);
+         font: bold 16px Verdana, Geneva, sans-serif; letter-spacing: .32em; color: var(--navy); }
+  .intro { max-width: 760px; margin: 0 auto 14px; text-align: center; }
+  .small { font: 11px/1.6 Verdana, Geneva, sans-serif; color: var(--muted); }
+
+  /* Stat tiles */
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 10px 0 6px; }
+  .tile { border: 2px outset #eee; background: #f4f4f4; padding: 8px 10px; text-align: center; }
+  .tile .k { font: bold 10px Verdana, sans-serif; letter-spacing: .15em; color: var(--muted); }
+  .tile .v { font: bold 22px "Courier New", Courier, monospace; margin: 2px 0; white-space: nowrap; }
+  .tile .v small { font-size: 13px; font-weight: normal; }
+  .tile .s { font: 11px Verdana, sans-serif; color: var(--muted); }
+  .live-dot { display: inline-block; width: 8px; height: 8px; background: #39c214; margin-right: 5px; vertical-align: 1px; }
+  .live-dot.off { background: #aaa; }
+
+  /* Bar charts (one series each, hover for exact value) */
+  .charts { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px 34px; margin-top: 14px; }
+  .chart .ttl { font: bold 12px Verdana, sans-serif; margin-bottom: 4px; }
+  .chart .box { position: relative; border: 2px inset #ddd; background: #fff; padding: 8px 6px 4px 6px; }
+  .chart svg { display: block; width: 100%; height: 150px; overflow: visible; }
+  .chart .axis { font: 10px Verdana, sans-serif; color: var(--muted); display: flex; justify-content: space-between; margin-top: 3px; }
+  .chart .tip { position: absolute; pointer-events: none; background: #ffffe1; border: 1px solid #000; padding: 2px 6px;
+                font: 11px Verdana, sans-serif; white-space: nowrap; display: none; z-index: 2; }
+  .chart rect.hit { fill: transparent; cursor: default; }
+  .chart rect.bar { fill: var(--navy); }
+  .chart rect.bar.hl { fill: var(--rust); }
+
+  /* How it works */
+  .how { border: 1px solid #999; padding: 10px 14px; box-shadow: 3px 3px 4px rgba(0,0,0,.12); max-width: 860px; margin: 0 auto; }
+  .how ol { margin: 6px 0; padding-left: 22px; }
+  .how li { margin-bottom: 6px; }
+  .how .ex { font: 13px/1.6 Verdana, sans-serif; border-top: 1px dotted #999; margin-top: 8px; padding-top: 6px; }
+  .how .step { display: grid; grid-template-columns: 7.5em 1fr; gap: 6px; }
+  .how .step b.bot { color: var(--red); } .how .step b.vic { color: var(--navy); }
+
+  /* Tables */
+  .seg { display: inline-flex; gap: 4px; }
+  .seg button { font: 12px Verdana, sans-serif; padding: 3px 10px; background: #dcdcdc; color: #000;
+                border: 2px outset #f4f4f4; cursor: pointer; }
+  .seg button.on { border-style: inset; background: #c8c8c8; font-weight: bold; }
+  .tblwrap { overflow-x: auto; margin-top: 8px; border: 2px inset #ddd; }
+  table { border-collapse: collapse; width: 100%; font: 12px/1.4 Verdana, Geneva, sans-serif; }
+  th, td { padding: 4px 8px; border-bottom: 1px solid #ddd; text-align: left; white-space: nowrap; }
+  th { background: #c0c0c0; border-bottom: 2px solid #808080; font-weight: bold; position: sticky; top: 0; }
+  td.num, th.num { text-align: right; font-family: "Courier New", Courier, monospace; font-size: 13px; }
+  tr:nth-child(even) td { background: #f6f6f6; }
+  .pos { color: var(--green); } .neg { color: var(--red); }
+  .center { text-align: center; margin-top: 10px; }
+  .more { background: none; border: 0; cursor: pointer; font: 13px Verdana, sans-serif; color: var(--link); text-decoration: underline; }
+  .empty, .error { text-align: center; color: var(--muted); font-style: italic; padding: 30px 0; }
+  footer { text-align: center; margin-top: 34px; font-size: 15px; }
+  footer ul { display: inline-block; text-align: left; max-width: 760px; }
+  @media (max-width: 560px) { body { font-size: 16px; } h2 span.label { letter-spacing: .24em; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="masthead">
+    <h1>MEV WATCH</h1>
+    <div class="tagline">Ethereum gas, congestion &amp; the sandwich bots feeding on swaps</div>
+  </div>
+  <hr class="groove">
+  <div class="dateline" id="updated"></div>
+  <div class="schedule-note">Gas tiles are live. Sandwich data is rescanned every 2 hours from confirmed blocks.</div>
+
+  <h2><span class="label">GAS &amp; CONGESTION</span></h2>
+  <div class="tiles" id="live"></div>
+  <div class="charts" id="gasCharts"></div>
+
+  <h2><span class="label">SANDWICH TRACKER</span></h2>
+  <div class="tiles" id="sandTiles"></div>
+  <div class="how" id="how"></div>
+
+  <h2><span class="label">WHO PROFITS</span></h2>
+  <div class="center"><span class="seg" id="botSeg"><button data-v="bots_24h" class="on">Last 24 hours</button><button data-v="bots_7d">Last 7 days</button></span></div>
+  <div class="tblwrap"><table id="bots"></table></div>
+  <div class="charts" id="dayCharts"></div>
+
+  <h2><span class="label">LATEST SANDWICHES</span></h2>
+  <div class="tblwrap"><table id="recent"></table></div>
+  <div class="center" id="recentMore"></div>
+
+  <hr class="groove">
+  <footer id="footer"></footer>
+</div>
+
+<script>
+// Load the scan data with a version stamp that changes every 10 minutes, so browsers never keep a stale copy.
+const dataScript = document.createElement("script");
+dataScript.src = "data/mev.js?v=" + Math.floor(Date.now() / 6e5);
+dataScript.onload = dataScript.onerror = () => main();
+document.head.append(dataScript);
+
+function main() {
+  const D = window.MEV_DATA;
+  const $ = (id) => document.getElementById(id);
+  const el = (tag, cls, text) => {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  };
+  const RPC = "https://ethereum-rpc.publicnode.com";
+  const ES = "https://etherscan.io/";
+  const short = (a) => a.slice(0, 6) + "…" + a.slice(-4);
+  const usd = (v, d = 2) => v == null ? "—" : (v < 0 ? "-$" : "$") + Math.abs(v).toLocaleString("en-US",
+    { minimumFractionDigits: d, maximumFractionDigits: d });
+  const link = (href, text) => { const a = el("a", null, text); a.href = href; a.target = "_blank"; a.rel = "noopener noreferrer"; return a; };
+  let ethUsd = D ? D.eth_usd : null;
+
+  function tile(k, v, s, unit) {
+    const t = el("div", "tile");
+    t.append(el("div", "k", k));
+    const vv = el("div", "v"); if (v instanceof Node) vv.append(v); else vv.textContent = v;
+    if (unit) vv.append(" ", el("small", null, unit));
+    t.append(vv, el("div", "s", s || ""));
+    return t;
+  }
+
+  // Bar chart: one series, hover shows the exact value. points: [{label, value, tip}]
+  function barChart(title, points, fmt, axisL, axisR) {
+    const c = el("div", "chart"), box = el("div", "box"), tip = el("div", "tip");
+    c.append(el("div", "ttl", title));
+    const ns = "http://www.w3.org/2000/svg", svg = document.createElementNS(ns, "svg");
+    const W = 600, H = 150, n = Math.max(points.length, 1), max = Math.max(...points.map((p) => p.value), 1e-9);
+    svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("preserveAspectRatio", "none");
+    const step = W / n, bw = Math.max(step - 2, 1);
+    const base = document.createElementNS(ns, "line");
+    Object.entries({ x1: 0, x2: W, y1: H, y2: H, stroke: "#999", "stroke-width": 1 }).forEach(([k, v]) => base.setAttribute(k, v));
+    svg.append(base);
+    points.forEach((p, i) => {
+      const h = Math.max(p.value / max * (H - 4), p.value > 0 ? 1 : 0);
+      const r = document.createElementNS(ns, "rect");
+      r.setAttribute("class", "bar"); r.setAttribute("x", i * step + 1); r.setAttribute("width", bw);
+      r.setAttribute("y", H - h); r.setAttribute("height", h);
+      const hit = document.createElementNS(ns, "rect");
+      hit.setAttribute("class", "hit"); hit.setAttribute("x", i * step); hit.setAttribute("width", step);
+      hit.setAttribute("y", 0); hit.setAttribute("height", H);
+      hit.addEventListener("mouseenter", () => { r.classList.add("hl"); tip.style.display = "block"; tip.textContent = p.tip || `${p.label}: ${fmt(p.value)}`; });
+      hit.addEventListener("mousemove", (e) => {
+        const b = box.getBoundingClientRect();
+        tip.style.left = Math.min(e.clientX - b.left + 10, b.width - tip.offsetWidth - 4) + "px";
+        tip.style.top = (e.clientY - b.top - 28) + "px";
+      });
+      hit.addEventListener("mouseleave", () => { r.classList.remove("hl"); tip.style.display = "none"; });
+      svg.append(r, hit);
+    });
+    box.append(svg, tip);
+    const ax = el("div", "axis"); ax.append(el("span", null, axisL || ""), el("span", null, "max " + fmt(max)), el("span", null, axisR || ""));
+    c.append(box, ax);
+    return c;
+  }
+
+  // ---------- Live gas (straight from a public Ethereum node, refreshed every 12 s) ----------
+  async function rpc(method, params) {
+    const r = await fetch(RPC, { method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }) });
+    const j = await r.json();
+    if (j.error) throw new Error(j.error.message);
+    return j.result;
+  }
+  async function live() {
+    try {
+      const [blk, fh] = await Promise.all([rpc("eth_getBlockByNumber", ["latest", false]),
+                                           rpc("eth_feeHistory", ["0x14", "latest", [50]])]);
+      const base = parseInt(blk.baseFeePerGas, 16) / 1e9;
+      const tips = fh.reward.map((r) => parseInt(r[0], 16) / 1e9).sort((a, b) => a - b);
+      const tipMed = tips[Math.floor(tips.length / 2)];
+      const full = 100 * parseInt(blk.gasUsed, 16) / parseInt(blk.gasLimit, 16);
+      const gwei = base + tipMed;
+      const cost = (gas) => ethUsd ? usd(gas * gwei * 1e-9 * ethUsd, 3) : "—";
+      const dot = el("span", "live-dot");
+      const box = $("live"); box.replaceChildren(
+        tile("BASE FEE", base.toFixed(3), "minimum price per unit of gas", "gwei"),
+        tile("TYPICAL TIP", tipMed.toFixed(3), "median priority fee, last 20 blocks", "gwei"),
+        tile("BLOCK FULLNESS", full.toFixed(0) + "%", "of the gas limit (50% = target)"),
+        tile("SEND ETH", cost(21000), "simple transfer, 21k gas"),
+        tile("UNISWAP SWAP", cost(150000), "roughly 150k gas"),
+        (() => { const v = el("span"); v.append(dot, String(parseInt(blk.number, 16)));
+                 return tile("LATEST BLOCK", v, `${blk.transactions.length} transactions`); })());
+    } catch (e) {
+      if (!$("live").children.length) $("live").append(el("div", "error", "Live gas data unavailable right now."));
+      else $("live").querySelectorAll(".live-dot").forEach((d) => d.classList.add("off"));
+    }
+  }
+  fetch("https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd")
+    .then((r) => r.json()).then((j) => { ethUsd = j.ethereum.usd; }).catch(() => {}).finally(() => { live(); setInterval(live, 12000); });
+
+  if (!D) { $("sandTiles").append(el("div", "error", "No scan data yet. Run: python3 scan.py")); return; }
+
+  const generated = new Date(D.generated_at), ageH = (Date.now() - generated) / 3600e3;
+  $("updated").textContent = "Sandwich scan updated: " + generated.toLocaleString("en-US",
+    { weekday: "short", month: "short", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit" })
+    + (ageH > 6 ? "  —  data is over 6 hours old" : "");
+  if (ageH > 6) $("updated").classList.add("stale");
+
+  // ---------- Gas history (per hour, from the scanned blocks) ----------
+  const hourLbl = (h) => new Date(h).toLocaleString("en-US", { weekday: "short", hour: "numeric" });
+  if (D.gas.length) {
+    const L = hourLbl(D.gas[0].hour), R = hourLbl(D.gas[D.gas.length - 1].hour);
+    $("gasCharts").append(
+      barChart("Average base fee per hour (gwei)", D.gas.map((g) => ({ value: g.base_gwei,
+        tip: `${hourLbl(g.hour)}: ${g.base_gwei} gwei (${g.blocks} blocks)` })), (v) => v.toFixed(3) + " gwei", L, R),
+      barChart("Average block fullness per hour (%)", D.gas.map((g) => ({ value: g.full_pct,
+        tip: `${hourLbl(g.hour)}: ${g.full_pct}% full, ${g.txs_per_block} tx/block` })), (v) => v.toFixed(0) + "%", L, R));
+  }
+
+  // ---------- Sandwich summary ----------
+  const r24 = D.recent, priced = r24.filter((s) => s.gross_usd != null);
+  const gross = priced.reduce((a, s) => a + s.gross_usd, 0), gas = priced.reduce((a, s) => a + (s.gas_usd || 0), 0);
+  const coverH = D.blocks_24h * 12 / 3600;
+  $("sandTiles").append(
+    tile("SANDWICHES", D.count_24h.toLocaleString("en-US"), `last 24h${coverH < 23 ? ` (only ${coverH.toFixed(1)}h scanned so far)` : ""}`),
+    tile("VICTIM TRADES", r24.reduce((a, s) => a + s.victims.length, 0).toLocaleString("en-US"), "swaps caught in the middle"),
+    tile("BOTS ACTIVE", new Set(r24.map((s) => s.bot)).size, "distinct bot contracts"),
+    tile("TAKEN (GROSS)", usd(gross, 0), "bot gain on the trades"),
+    tile("PAID AS GAS", usd(gas, 0), gross > 0 ? `${Math.round(100 * gas / gross)}% of the take` : ""),
+    tile("LEFT FOR BOTS", usd(gross - gas, 0), "before any direct builder payment"));
+
+  // ---------- How it works + a real example ----------
+  const how = $("how");
+  how.append(el("b", null, "How a sandwich works"));
+  const ol = el("ol");
+  ["You send a swap to the public mempool, e.g. buy TOKEN with ETH, allowing some slippage (say 1%).",
+   "A bot sees it before it is confirmed and buys TOKEN first (the front-run). That pushes the price up.",
+   "Your swap goes through at the worse price, still inside your slippage limit, and pushes the price up further.",
+   "Right after you, the bot sells its TOKEN (the back-run) at the higher price. The difference is its profit, paid by you.",
+   "To make sure the three trades land in exactly this order, the bot bids for the spot: most of the profit goes to the block builder as gas."]
+    .forEach((t) => ol.append(el("li", null, t)));
+  how.append(ol);
+  const ex = D.example;
+  if (ex) {
+    const box = el("div", "ex");
+    box.append(el("div", null, `Biggest one in the last 24h: ${ex.pair} pool, block ${ex.block.toLocaleString("en-US")}`));
+    const row = (who, cls, what, hashes) => {
+      const r = el("div", "step"), b = el("b", cls, who), s = el("span", null, what + " ");
+      hashes.forEach((h, i) => { s.append(link(ES + "tx/" + h, short(h))); if (i < hashes.length - 1) s.append(", "); });
+      r.append(b, s); return r;
+    };
+    box.append(row("1. Bot", "bot", "buys first:", [ex.front]),
+               row(ex.victims.length > 1 ? `2. ${ex.victims.length} victims` : "2. Victim", "vic", "swap at the worse price:", ex.victims),
+               row("3. Bot", "bot", "sells right after:", [ex.back]));
+    const res = el("div");
+    res.append(`Result: bot gained ${usd(ex.gross_usd)}, paid ${usd(ex.gas_usd)} in gas `
+      + `→ ${usd(ex.gross_usd - (ex.gas_usd || 0))} left. Bot contract: `, link(ES + "address/" + ex.bot, short(ex.bot)));
+    box.append(res);
+    how.append(box);
+  }
+  how.append(el("div", "small", "Protect yourself: keep slippage low, and use a wallet or RPC with MEV protection "
+    + "(private transaction sending) so your swap never sits in the public mempool."));
+
+  // ---------- Bot leaderboard ----------
+  function botTable(key) {
+    const t = $("bots"); t.replaceChildren();
+    const rows = D[key];
+    const hd = el("tr");
+    [["#"], ["Bot contract"], ["Sandwiches", 1], ["Victims", 1], ["Gross", 1], ["Gas paid", 1], ["Left after gas", 1], ["Kept", 1]]
+      .forEach(([h, n]) => hd.append(el("th", n ? "num" : null, h)));
+    t.append(hd);
+    if (!rows.length) { const tr = el("tr"), td = el("td", "empty", "No sandwiches found yet."); td.colSpan = 8; tr.append(td); t.append(tr); return; }
+    rows.forEach((b, i) => {
+      const tr = el("tr"), net = b.gross_usd - b.gas_usd, a = el("td");
+      a.append(link(ES + "address/" + b.bot, short(b.bot)));
+      tr.append(el("td", null, i + 1), a, el("td", "num", b.count), el("td", "num", b.victims),
+        el("td", "num", usd(b.gross_usd)), el("td", "num", usd(b.gas_usd)),
+        el("td", "num " + (net >= 0 ? "pos" : "neg"), usd(net)),
+        el("td", "num", b.gross_usd > 0 ? Math.round(100 * net / b.gross_usd) + "%" : "—"));
+      if (b.unpriced) tr.title = `${b.unpriced} sandwich(es) in tokens without a USD price are not included in the $ columns`;
+      t.append(tr);
+    });
+  }
+  botTable("bots_24h");
+  $("botSeg").addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b) return;
+    for (const x of $("botSeg").children) x.classList.toggle("on", x === b);
+    botTable(b.dataset.v);
+  });
+
+  if (D.daily.length > 1) {
+    const dl = (d) => new Date(d.day + "T12:00:00Z").toLocaleDateString("en-US", { month: "short", day: "numeric" });
+    $("dayCharts").append(
+      barChart("Sandwiches per day", D.daily.map((d) => ({ value: d.count, tip: `${dl(d)}: ${d.count} sandwiches, ${d.bots} bots` })),
+        (v) => String(Math.round(v)), dl(D.daily[0]), dl(D.daily[D.daily.length - 1])),
+      barChart("Taken from victims per day (gross $)", D.daily.map((d) => ({ value: Math.max(d.gross_usd, 0),
+        tip: `${dl(d)}: ${usd(d.gross_usd, 0)} gross, ${usd(d.net_usd, 0)} left after gas` })),
+        (v) => usd(v, 0), dl(D.daily[0]), dl(D.daily[D.daily.length - 1])));
+  }
+
+  // ---------- Latest sandwiches ----------
+  let showN = 25;
+  function recentTable() {
+    const t = $("recent"); t.replaceChildren();
+    const hd = el("tr");
+    [["Time"], ["Pool"], ["Bot"], ["Victims", 1], ["Bot gain", 1], ["Gas", 1], ["Left", 1], ["Txs"]]
+      .forEach(([h, n]) => hd.append(el("th", n ? "num" : null, h)));
+    t.append(hd);
+    for (const s of r24.slice(0, showN)) {
+      const tr = el("tr"), bot = el("td"), txs = el("td");
+      bot.append(link(ES + "address/" + s.bot, short(s.bot)));
+      txs.append(link(ES + "tx/" + s.front, "front"), " · ", link(ES + "tx/" + s.victims[0], "victim"), " · ", link(ES + "tx/" + s.back, "back"));
+      const gain = s.gross_usd != null ? usd(s.gross_usd) : `${s.profit_amount.toLocaleString("en-US", { notation: "compact", maximumSignificantDigits: 3 })} ${s.profit_token}`;
+      const left = s.gross_usd != null ? s.gross_usd - (s.gas_usd || 0) : null;
+      tr.append(el("td", null, new Date(s.time).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })),
+        el("td", null, s.pair), bot, el("td", "num", s.victims.length), el("td", "num", gain), el("td", "num", usd(s.gas_usd)),
+        el("td", "num " + (left == null ? "" : left >= 0 ? "pos" : "neg"), usd(left)), txs);
+      t.append(tr);
+    }
+    if (!r24.length) { const tr = el("tr"), td = el("td", "empty", "No sandwiches found yet."); td.colSpan = 8; tr.append(td); t.append(tr); }
+    const m = $("recentMore"); m.replaceChildren();
+    if (r24.length > showN) { const b = el("button", "more", `[ show ${Math.min(r24.length, 150) - showN} more » ]`); b.onclick = () => { showN = 150; recentTable(); }; m.append(b); }
+  }
+  recentTable();
+
+  // ---------- Footer ----------
+  const f = $("footer"), ul = el("ul", "small");
+  ["Sandwiches are detected from confirmed blocks: the same bot trades the same pool right before and right after "
+     + "another trader going the same way, and sells back roughly what it bought. Covers Uniswap V2/V3-style pools "
+     + "(Uniswap, SushiSwap and forks); Uniswap V4, Curve, Balancer and multi-pool sandwiches are not detected.",
+   "“Gas” is everything the bot paid in transaction fees, including the priority tip that goes to the builder. "
+     + "Some bots also pay builders with a direct transfer, which is not visible here, so real profits are lower than shown.",
+   "Only gains in ETH, USDC, USDT or DAI get a dollar value; others show the token amount.",
+   "Failed or outbid sandwich attempts never reach the chain, so the cost of competing is not visible.",
+   "Gas tiles are read live from a public Ethereum node (publicnode.com); ETH price from CoinGecko."]
+    .forEach((t) => ul.append(el("li", null, t)));
+  f.append(ul, el("p", "small", "Read-only research page. It never sends transactions. Not financial advice."));
+}
+</script>
+</body>
+</html>
