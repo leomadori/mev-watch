@@ -1,9 +1,567 @@
 {
- "generated_at": "2026-10-19T14:50:03+00:00",
- "eth_usd": 2411.56,
+ "generated_at": "2026-10-19T16:56:01+00:00",
+ "eth_usd": 2400.79,
  "first_scan": "2026-10-12T11:25:02+00:00",
- "blocks_24h": 6147,
+ "blocks_24h": 6775,
  "recent": [
+  {
+   "block": 26227922,
+   "time": "2026-10-19T16:49:11+00:00",
+   "pool": "0xe3baa96ad46457d9e6cdd4e32abc11e2c124ec49",
+   "pair": "MATIC/WETH",
+   "bot": "0x1f2f10d1c40777ae1da742455c65828ff36df387",
+   "bot_eoa": "0xae2fc483527b8ef99eb5d9b44875f005ba1fae13",
+   "front": "0x22d2b84b1998346e11e95ed5270ad5c5ce913e54045dd3b610fd3b7e2732651a",
+   "back": "0x2a027fab56f8ba4b76d6dc966fd4299de94761d60a6512a8643f55bda4070a59",
+   "victims": [
+    "0x19140517b8358b38982be3fb886fea4bc49cd7a15893c84a2be0f39fdc0bb39d"
+   ],
+   "profit_token": "WETH",
+   "profit_amount": 3.251e-05,
+   "complex": true,
+   "gross_usd": null,
+   "gas_usd": 0.13
+  },
+  {
+   "block": 26227922,
+   "time": "2026-10-19T16:49:11+00:00",
+   "pool": "0xbb6d133d7f36705ea058cfd706082aa382f23de9",
+   "pair": "MATIC/WETH",
+   "bot": "0x1f2f10d1c40777ae1da742455c65828ff36df387",
+   "bot_eoa": "0xae2fc483527b8ef99eb5d9b44875f005ba1fae13",
+   "front": "0x22d2b84b1998346e11e95ed5270ad5c5ce913e54045dd3b610fd3b7e2732651a",
+   "back": "0x2a027fab56f8ba4b76d6dc966fd4299de94761d60a6512a8643f55bda4070a59",
+   "victims": [
+    "0x19140517b8358b38982be3fb886fea4bc49cd7a15893c84a2be0f39fdc0bb39d"
+   ],
+   "profit_token": "WETH",
+   "profit_amount": 2.035e-05,
+   "complex": true,
+   "gross_usd": null,
+   "gas_usd": 0.13
+  },
+  {
+   "block": 26227917,
+   "time": "2026-10-19T16:48:11+00:00",
+   "pool": "0x1e9348b71ecbaaa14eff7b4b6186b78d1a9b9b70",
+   "pair": "VSG/WETH",
+   "bot": "0x672061b75f770331b0c7c2a566a9ac0a9ba331d2",
+   "bot_eoa": "0x11111215b72e894c60f24e91ac2c8ccb1d373911",
+   "front": "0x6523a1a6d549bd453753866f19a74763eb0a4be488f1fcd242e2a8ec4db223d3",
+   "back": "0x96fd56f5e97e49dafb69ae47977a12787c0d7836fbb5ac7d3deba6a0a5e79fc9",
+   "victims": [
+    "0x86b5c70836f5eca7579616e151e3dd1e077e6fb8af1f17a5981550e43a174b63"
+   ],
+   "profit_token": "WETH",
+   "profit_amount": 9.909e-05,
+   "complex": false,
+   "gross_usd": 0.24,
+   "gas_usd": 0.24
+  },
+  {
+   "block": 26227877,
+   "time": "2026-10-19T16:40:11+00:00",
+   "pool": "0x8867f20c1c63baccec7617626254a060eeb0e61e",
+   "pair": "PHA/WETH",
+   "bot": "0x0000000061b878403d27b500af1e900056707555",
+   "bot_eoa": "0x00000000dfe9a4e57631ce11d7854871756b0111",
+   "front": "0xc6b5333f7a26367c924de1b94036bd00867ea634eb70ca22e222bc49f9413698",
+   "back": "0x3d4d0fac15d326104ce1ab0c001a61de263347dc450bc9edaef28775fa8d3631",
+   "victims": [
+    "0x7eede64a4434cafb2b9b562f5ddf566e64f96a4c539c32fe149e29e86b7b3345"
+   ],
+   "profit_token": "WETH",
+   "profit_amount": 0.00014136,
+   "complex": false,
+   "gross_usd": 0.34,
+   "gas_usd": 0.33
+  },
+  {
+   "block": 26227845,
+   "time": "2026-10-19T16:33:47+00:00",
+   "pool": "0x93f3923cf4eb2dd4cfd3beef42fc6d3178412121",
+   "pair": "GROKLET/WETH",
+   "bot": "0xbdb939c9cd180e400027a64a3ea6660f80817fa6",
+   "bot_eoa": "0xc68d3ba67e2755c9a2f46a0b51a1694ef53c0ea0",
+   "front": "0x02f59b2ff515d2270a2a8c15509c90b9cbb21b702f9c62e1073e1868c22b3f44",
+   "back": "0x225ef1ee50e86281121f280e2b521eaa6583f610c57edc0a6344b42511d50931",
+   "victims": [
+    "0xfaf804397aa1b804a569a44470f53deecd00c6f8512a656dcec3ee171a91ad39"
+   ],
+   "profit_token": "WETH",
+   "profit_amount": 0.00056381,
+   "complex": false,
+   "gross_usd": 1.35,
+   "gas_usd": 1.35
+  },
+  {
+   "block": 26227836,
+   "time": "2026-10-19T16:31:59+00:00",
+   "pool": "0xf774c0cf63a7bb1a403fc7256242283c150e9b95",
+   "pair": "DOPE/WETH",
+   "bot": "0xe5c83462262a5d32d12c2a835fa1c46f58400d0f",
+   "bot_eoa": "0x012182b03cf82e0f5339711c56fe9abdb3aa5dd4",
+   "front": "0xb29f2d9d0b1c4a44387376c29a79957a064e210a34035f24444c9872a162df27",
+   "back": "0x7daacaeb5f337bc5e27e764bc0a03e4757aeb22c6ba1b5e1afa0f94c1bd56347",
+   "victims": [
+    "0x018ee655d0d22de06ded4b838273b3de120fb11542d713a2963f2d7ab804d28e"
+   ],
+   "profit_token": "WETH",
+   "profit_amount": 0.00176573,
+   "complex": false,
+   "gross_usd": 4.24,
+   "gas_usd": 4.22
+  },
+  {
+   "block": 26227683,
+   "time": "2026-10-19T16:01:23+00:00",
+   "pool": "0xf774c0cf63a7bb1a403fc7256242283c150e9b95",
+   "pair": "DOPE/WETH",
+   "bot": "0x140022b7000081000001094700609300d2187dab",
+   "bot_eoa": "0x27c2a1733f14e1247c5feb1c37cd52ae7d0d2bf2",
+   "front": "0xb0c71937012199f24ff404782341510776df336447ff6986ba1172d5f279b148",
+   "back": "0x9f899d6e2340dc5c8591e7c468b41cafdfe5c26f7503749847cf7de3b2c05e6f",
+   "victims": [
+    "0x707d1cd8f4e61eb73faae596b036bcf247d938bf4ed88f912d26125fefbbfe1b"
+   ],
+   "profit_token": "WETH",
+   "profit_amount": 0.00200985,
+   "complex": false,
+   "gross_usd": 4.83,
+   "gas_usd": 4.78
+  },
+  {
+   "block": 26227669,
+   "time": "2026-10-19T15:58:35+00:00",
+   "pool": "0xc7570e8e9108b2c1625885ec5cdb692b197c8dbd",
+   "pair": "WETH/DNA",
+   "bot": "0xbdb939c9cd180e400027a64a3ea6660f80817fa6",
+   "bot_eoa": "0xc68d3ba67e2755c9a2f46a0b51a1694ef53c0ea0",
+   "front": "0xfaf2a8c3e6e03222828e2ab0675855d30578c69425ad80f410b2a840654073ec",
+   "back": "0x8b955dc559db18a76ca87b669590ce0d86bf2c8c1d85e2a26b759da6e93a4633",
+   "victims": [
+    "0xce2fecc152f272d4172f7f0ea3215587ebf24f86ffa34cee2a20e24ac9217dab"
+   ],
+   "profit_token": "WETH",
+   "profit_amount": 9.708e-05,
+   "complex": false,
+   "gross_usd": 0.23,
+   "gas_usd": 0.29
+  },
+  {
+   "block": 26227666,
+   "time": "2026-10-19T15:57:59+00:00",
+   "pool": "0x55d5c232d921b9eaa6b37b5845e439acd04b4dba",
+   "pair": "HEX/WETH",
+   "bot": "0x1f2f10d1c40777ae1da742455c65828ff36df387",
+   "bot_eoa": "0xae2fc483527b8ef99eb5d9b44875f005ba1fae13",
+   "front": "0x7c87c668db793d1a95f18cf18ef67a845cdb4cb3ff34a02564be6e537df83dce",
+   "back": "0x5fda76ae063a72dbebc37f20f8e4fdc58a3335b975d232c47b5959d78e88e289",
+   "victims": [
+    "0x5750d7c46b9a0065fef958ec7ceceacfc33d93b885ebfec2908f1d607b6dc8ba"
+   ],
+   "profit_token": "WETH",
+   "profit_amount": 0.00936144,
+   "complex": true,
+   "gross_usd": null,
+   "gas_usd": 0.76
+  },
+  {
+   "block": 26227663,
+   "time": "2026-10-19T15:57:23+00:00",
+   "pool": "0xc7bbec68d12a0d1830360f8ec58fa599ba1b0e9b",
+   "pair": "WETH/USDT",
+   "bot": "0x410144dec85bb1929057829d54fb3b8d3f0ea4a3",
+   "bot_eoa": "0x3ee92cd00993a4488ae153ab41ac7947cbcbc1de",
+   "front": "0x334dcde189ff4c7e2d689479411623059dec1aabc4a953b1f89c9efcf51f6e91",
+   "back": "0xe6568e1ca33242946a3ae19e171b9461d61e4c52ffe09d706ae741b65fbc8ba6",
+   "victims": [
+    "0xd1c33733b78dafe1d555d76025ddd77288e1e3c684d3bd73fd280cb89fbed243"
+   ],
+   "profit_token": "WETH",
+   "profit_amount": 0.0165281,
+   "complex": false,
+   "gross_usd": 39.68,
+   "gas_usd": 39.59
+  },
+  {
+   "block": 26227652,
+   "time": "2026-10-19T15:55:11+00:00",
+   "pool": "0xf774c0cf63a7bb1a403fc7256242283c150e9b95",
+   "pair": "DOPE/WETH",
+   "bot": "0x140022b7000081000001094700609300d2187dab",
+   "bot_eoa": "0x27c2a1733f14e1247c5feb1c37cd52ae7d0d2bf2",
+   "front": "0xbb7529d02bd9e1956000e38ba6609ddfd3b593972b30751bc01a157ada701e2d",
+   "back": "0x6efe9346f756cac7ce56fcb6c80a04ac2f9de2bc3d3280138eeb1cd6254e77ca",
+   "victims": [
+    "0x418f948ca99e8001af096a9fa95b43ae07a185ebf6e5f379462145e472a751f9"
+   ],
+   "profit_token": "WETH",
+   "profit_amount": 0.00065632,
+   "complex": false,
+   "gross_usd": 1.58,
+   "gas_usd": 1.56
+  },
+  {
+   "block": 26227650,
+   "time": "2026-10-19T15:54:47+00:00",
+   "pool": "0xe3bc1e007867db76691c479d82dcbc5acc3e8b8e",
+   "pair": "MIB/WETH",
+   "bot": "0xbdb939c9cd180e400027a64a3ea6660f80817fa6",
+   "bot_eoa": "0xc68d3ba67e2755c9a2f46a0b51a1694ef53c0ea0",
+   "front": "0x6c3c1306847e79712c3a72b6791fdf8f213d1cfc10e4ebff1b4111ab7c48e96f",
+   "back": "0x8d588507fce80776afcd57b2f68f15addcc645051fef32263213ba47792baf0b",
+   "victims": [
+    "0xe5cb6e03b4aab178faef6d26ebf484ce06ecd5f79f38384b177eb63d401cab97"
+   ],
+   "profit_token": "WETH",
+   "profit_amount": 0.00021681,
+   "complex": false,
+   "gross_usd": 0.52,
+   "gas_usd": 0.52
+  },
+  {
+   "block": 26227639,
+   "time": "2026-10-19T15:52:35+00:00",
+   "pool": "0xc7bbec68d12a0d1830360f8ec58fa599ba1b0e9b",
+   "pair": "WETH/USDT",
+   "bot": "0xe7b4543823b988503d5cbf86aaefb0e78d16958c",
+   "bot_eoa": "0xdee2f2b830cbc867cdc18c1df5da8728f2a50d4e",
+   "front": "0x06d76ff61131667415747d3ae1bd4dcc47f277356aa47f04dfc1032cef435d39",
+   "back": "0x10b98e6d8f984a0259d7ec1e3f8b929d7bd1720834a9889dc79fc940c08259ae",
+   "victims": [
+    "0xc651d2bf5fe05a5e32fae1605261b421a626eca53d20f24e5e66894655a55b9b"
+   ],
+   "profit_token": "WETH",
+   "profit_amount": 0.0002648,
+   "complex": false,
+   "gross_usd": 0.64,
+   "gas_usd": 0.14
+  },
+  {
+   "block": 26227628,
+   "time": "2026-10-19T15:50:23+00:00",
+   "pool": "0xe6ff8b9a37b0fab776134636d9981aa778c4e718",
+   "pair": "WBTC/WETH",
+   "bot": "0x410144dec85bb1929057829d54fb3b8d3f0ea4a3",
+   "bot_eoa": "0x3ee92cd00993a4488ae153ab41ac7947cbcbc1de",
+   "front": "0x833b71f44ecf8c2d26b451099d7476843aa88fb7c822c9f95ee7c2f53bee086b",
+   "back": "0x2d917066d92595cbc634cb8036039ab81dcfe21f8648be2b1692915915e549ea",
+   "victims": [
+    "0x1e84f76561e497daa2725786669656dca5060352fb6fa8532622764647f63ef1"
+   ],
+   "profit_token": "WETH",
+   "profit_amount": 0.00220768,
+   "complex": false,
+   "gross_usd": 5.3,
+   "gas_usd": 5.29
+  },
+  {
+   "block": 26227599,
+   "time": "2026-10-19T15:44:35+00:00",
+   "pool": "0xe5b1b1a42f7e7f60837f814fab9e7b79873c2a77",
+   "pair": "$BZIL/WETH",
+   "bot": "0xbdb939c9cd180e400027a64a3ea6660f80817fa6",
+   "bot_eoa": "0xc68d3ba67e2755c9a2f46a0b51a1694ef53c0ea0",
+   "front": "0x10d249a34f7cebfb2c8c5e7ebeddbb3d1b99bfaf78ca4886c3eb37264c375048",
+   "back": "0xba2f0d45cc30be8d16b6b37af4862d9ca1a593d23864c24e24fa64acdbea5964",
+   "victims": [
+    "0x7d2465c8b0e3ac212ba5a7cbc9d71b8dc8ad745c8348befc3b35dbaa4effaa40"
+   ],
+   "profit_token": "WETH",
+   "profit_amount": 7.742e-05,
+   "complex": false,
+   "gross_usd": 0.19,
+   "gas_usd": 0.19
+  },
+  {
+   "block": 26227583,
+   "time": "2026-10-19T15:41:23+00:00",
+   "pool": "0xe3bc1e007867db76691c479d82dcbc5acc3e8b8e",
+   "pair": "MIB/WETH",
+   "bot": "0xbdb939c9cd180e400027a64a3ea6660f80817fa6",
+   "bot_eoa": "0xc68d3ba67e2755c9a2f46a0b51a1694ef53c0ea0",
+   "front": "0x7fb0fe44a668da6a0464101cd2c40783154bc95a898ab8ee2f2ca2128d75dbd7",
+   "back": "0x7ae6a092e33d3c153771b51cb56272a7bc75a1b5905337cca300c148a894a5b1",
+   "victims": [
+    "0xbc5a02c1323bb202fe134de8b4a4c0ccf01405a23d0018b6faf1a2d576d92ec5"
+   ],
+   "profit_token": "WETH",
+   "profit_amount": 0.00083875,
+   "complex": false,
+   "gross_usd": 2.01,
+   "gas_usd": 2.01
+  },
+  {
+   "block": 26227538,
+   "time": "2026-10-19T15:32:23+00:00",
+   "pool": "0xc7570e8e9108b2c1625885ec5cdb692b197c8dbd",
+   "pair": "WETH/DNA",
+   "bot": "0x1f2f10d1c40777ae1da742455c65828ff36df387",
+   "bot_eoa": "0xae2fc483527b8ef99eb5d9b44875f005ba1fae13",
+   "front": "0x163c2f18d000254d2ab81d4874fee2a711902319050a155dec930b54fe49ef58",
+   "back": "0x63fda77e33f1e857a0b7d6cd21273918a128ecc42438ff2c441385a6e44f43f7",
+   "victims": [
+    "0x0c53ec0a17385c3860d0cc14efc97a4554e2fb241bb5fad7c11db36551ca115b"
+   ],
+   "profit_token": "WETH",
+   "profit_amount": 0.00022973,
+   "complex": false,
+   "gross_usd": 0.55,
+   "gas_usd": 0.55
+  },
+  {
+   "block": 26227535,
+   "time": "2026-10-19T15:31:47+00:00",
+   "pool": "0xc7570e8e9108b2c1625885ec5cdb692b197c8dbd",
+   "pair": "WETH/DNA",
+   "bot": "0x0000000061b878403d27b500af1e900056707555",
+   "bot_eoa": "0x00000000dfe9a4e57631ce11d7854871756b0111",
+   "front": "0x14dd61a5fe40321d3fa00c72bccb46e3bf5e1ce5833ffdc4eea5f94944c789e2",
+   "back": "0xc5ed12cb0937c62e3eb69fbf812a5f8992abae6bf86ab52e096593cc70225505",
+   "victims": [
+    "0xa474ad6b22495c007ee8de559194ebd78b90a651165dac746af3c48477334e9c"
+   ],
+   "profit_token": "WETH",
+   "profit_amount": 0.00016647,
+   "complex": false,
+   "gross_usd": 0.4,
+   "gas_usd": 0.39
+  },
+  {
+   "block": 26227531,
+   "time": "2026-10-19T15:30:59+00:00",
+   "pool": "0xe0554a476a092703abdb3ef35c80e0d76d32939f",
+   "pair": "USDC/WETH",
+   "bot": "0x000000000035b5e5ad9019092c665357240f594e",
+   "bot_eoa": "0x654fae4aa229d104cabead47e56703f58b174be4",
+   "front": "0xf0259211ff32689faf38e69a7c06fdde03a67fa4e3617003df26217db0159bf0",
+   "back": "0xe8a093476948d1b87eaf04a9e8a5ddc4b040cb72cd3eae14fef3752288eda118",
+   "victims": [
+    "0x93ba3e829daa82ee843716a99752e0c996ea96806793febfde9ff9df5aa4bcb1"
+   ],
+   "profit_token": "USDC",
+   "profit_amount": 6e-06,
+   "complex": false,
+   "gross_usd": 0.0,
+   "gas_usd": 0.82
+  },
+  {
+   "block": 26227530,
+   "time": "2026-10-19T15:30:47+00:00",
+   "pool": "0xc7570e8e9108b2c1625885ec5cdb692b197c8dbd",
+   "pair": "WETH/DNA",
+   "bot": "0x0000000061b878403d27b500af1e900056707555",
+   "bot_eoa": "0x00000000dfe9a4e57631ce11d7854871756b0111",
+   "front": "0x133863f9cd9ecb5dc58275583ff1c7c676608b701051c0dda84229f4e9cebd8a",
+   "back": "0x009fff52944a3408110eda9c5ab471bf06bd079c5ef90c81a60cb742a0e28ff2",
+   "victims": [
+    "0x5f003623fb505d83263507938ab3bf89da309534cfd23ce2cd8a4f2bde180be0"
+   ],
+   "profit_token": "WETH",
+   "profit_amount": 0.0001043,
+   "complex": false,
+   "gross_usd": 0.25,
+   "gas_usd": 0.25
+  },
+  {
+   "block": 26227511,
+   "time": "2026-10-19T15:26:59+00:00",
+   "pool": "0xc7bbec68d12a0d1830360f8ec58fa599ba1b0e9b",
+   "pair": "WETH/USDT",
+   "bot": "0x6338afee3ff32599bff2ce3d8b7604bd6d6a41a7",
+   "bot_eoa": "0x595caa1ce7d8cb5df54c017d07d86ed0e24a3b2c",
+   "front": "0x261be0c87ce6c91923e8a95836db64b95ebf5fe3ab20fe58b69494ff886dc032",
+   "back": "0x42547f0860ca556cfc355f9282c7c8dee2cc0a60d72901d273ebfacc616c23f3",
+   "victims": [
+    "0xe5110e3db189262330d7cc5f9a5b57edf5997fd3565f7747cfff6538d72be997"
+   ],
+   "profit_token": "USDT",
+   "profit_amount": 4.168769,
+   "complex": false,
+   "gross_usd": 4.17,
+   "gas_usd": 0.37
+  },
+  {
+   "block": 26227501,
+   "time": "2026-10-19T15:24:59+00:00",
+   "pool": "0x0287c35978561401710ba6762b72fb1b43b01223",
+   "pair": "JPMD/WETH",
+   "bot": "0xdfa8ead9129d2053f307e9370570a33118619ea0",
+   "bot_eoa": "0x73378429ac80aabb6bbdff61797a1d6d04338eab",
+   "front": "0x23cc247943c3f1d4b0d37b33cbd65b8cad14a2633f657588d3e5e5f9aab7a4e7",
+   "back": "0x9b2b3f623e4816de12e2c425a77bc82aab3aa897a1bf921d2465ff9af5c3ec33",
+   "victims": [
+    "0x2e1f4463fe129d87abda78fce9e00a5b87de9d006b2bb5fae4ada5e9b90af590"
+   ],
+   "profit_token": "WETH",
+   "profit_amount": -0.0044923,
+   "complex": false,
+   "gross_usd": -10.79,
+   "gas_usd": 0.21
+  },
+  {
+   "block": 26227482,
+   "time": "2026-10-19T15:21:11+00:00",
+   "pool": "0xe0554a476a092703abdb3ef35c80e0d76d32939f",
+   "pair": "USDC/WETH",
+   "bot": "0xe7b4543823b988503d5cbf86aaefb0e78d16958c",
+   "bot_eoa": "0xdee2f2b830cbc867cdc18c1df5da8728f2a50d4e",
+   "front": "0x5b0b117098d344f1e1a9068d69103803ea13b7b017498f6115329286ce06f358",
+   "back": "0x6b20863ea5a541ffce593779edb7a8bd387d64996aa5ea21a85d5a2fc85a759e",
+   "victims": [
+    "0xc1e463a2ef1e86675f0c8e30b53e485ef564a49da62c9144100128ad7b21d87a"
+   ],
+   "profit_token": "WETH",
+   "profit_amount": 9.174e-05,
+   "complex": false,
+   "gross_usd": 0.22,
+   "gas_usd": 0.2
+  },
+  {
+   "block": 26227463,
+   "time": "2026-10-19T15:17:23+00:00",
+   "pool": "0x9b909d64866c677903af0481b0ec9b472078db34",
+   "pair": "GTA6/WETH",
+   "bot": "0xbdb939c9cd180e400027a64a3ea6660f80817fa6",
+   "bot_eoa": "0xc68d3ba67e2755c9a2f46a0b51a1694ef53c0ea0",
+   "front": "0x5541134c8f3d4fdb399023d56821beff165e87a8ab5d07cad63202c29e1222b4",
+   "back": "0x48414ee172be56dbd5ecf47a0eabcf4187549879b714227baac51b39b5d2e498",
+   "victims": [
+    "0x521a47be34d491a182781cb6ac5826653fc8aeb4dab74dca8703062d9055147e"
+   ],
+   "profit_token": "WETH",
+   "profit_amount": 0.00164864,
+   "complex": false,
+   "gross_usd": 3.96,
+   "gas_usd": 3.96
+  },
+  {
+   "block": 26227455,
+   "time": "2026-10-19T15:15:47+00:00",
+   "pool": "0x9b909d64866c677903af0481b0ec9b472078db34",
+   "pair": "GTA6/WETH",
+   "bot": "0x1f2f10d1c40777ae1da742455c65828ff36df387",
+   "bot_eoa": "0xae2fc483527b8ef99eb5d9b44875f005ba1fae13",
+   "front": "0x2ddf2146ccf7913a6ef4a8effa5e8b0ad8b930d6fe4b84f6dc006fb217853567",
+   "back": "0x718d7fdcb2ba49f9335d68cd454c17579362347253660543748342949044652d",
+   "victims": [
+    "0x89a5b144c00f2f4b3e654cb362f018d470ecdac8f0c9ca71d1814d8da6cad0bb"
+   ],
+   "profit_token": "WETH",
+   "profit_amount": 0.00177347,
+   "complex": false,
+   "gross_usd": 4.26,
+   "gas_usd": 4.26
+  },
+  {
+   "block": 26227433,
+   "time": "2026-10-19T15:11:23+00:00",
+   "pool": "0xf07a93092f6f9564b9a01a412922654cfeeee097",
+   "pair": "ANTH/WETH",
+   "bot": "0x140022b7000081000001094700609300d2187dab",
+   "bot_eoa": "0xae2459df6abc67234f11ed0a9763eb8686cd1c1b",
+   "front": "0xbd23b5527b128e7d4141bb6a7a3c83c778ed99f0841a9bb3db61864cfc2658df",
+   "back": "0x0a6291e10b39ae1a1426da5f04c1a7bef71725382c38fb7cb4f35e0e1775aa6c",
+   "victims": [
+    "0xc03daca1d52ab910b838c94239a1339537b7b56614735795d0778621e1fa7b79"
+   ],
+   "profit_token": "WETH",
+   "profit_amount": 0.00025634,
+   "complex": true,
+   "gross_usd": null,
+   "gas_usd": 7.34
+  },
+  {
+   "block": 26227400,
+   "time": "2026-10-19T15:04:47+00:00",
+   "pool": "0xe0554a476a092703abdb3ef35c80e0d76d32939f",
+   "pair": "USDC/WETH",
+   "bot": "0xa462d9acaccb141ce7f17213b95198fe248c27a1",
+   "bot_eoa": "0xc54b77b28ee4d18cd3d93991f08b79bc85c71097",
+   "front": "0x9d22dcf7b554e70e1bef96cc82bb4ef54b537204c4d0f3ede5cdb99a2551c766",
+   "back": "0x8b8dfd40fd90ca3508a856fead34b01617d70e8a45330fce7f82a55309cfe0a6",
+   "victims": [
+    "0x5d914ef9a332ef6cd4b23830f5a02c43ed721a4d8e3ad33a8a5b232a7e5be698"
+   ],
+   "profit_token": "WETH",
+   "profit_amount": 0.00131176,
+   "complex": true,
+   "gross_usd": null,
+   "gas_usd": 0.51
+  },
+  {
+   "block": 26227400,
+   "time": "2026-10-19T15:04:47+00:00",
+   "pool": "0x4cd36d6f32586177e36179a810595a33163a20bf",
+   "pair": "DAO/USDC",
+   "bot": "0xa462d9acaccb141ce7f17213b95198fe248c27a1",
+   "bot_eoa": "0xc54b77b28ee4d18cd3d93991f08b79bc85c71097",
+   "front": "0x9d22dcf7b554e70e1bef96cc82bb4ef54b537204c4d0f3ede5cdb99a2551c766",
+   "back": "0x8b8dfd40fd90ca3508a856fead34b01617d70e8a45330fce7f82a55309cfe0a6",
+   "victims": [
+    "0x075d1d9192c6fcab8e877f683afff6a4bc20aed3e60c71ed155d68e10b8da241"
+   ],
+   "profit_token": "DAO",
+   "profit_amount": 88.79437763,
+   "complex": true,
+   "gross_usd": null,
+   "gas_usd": 0.51
+  },
+  {
+   "block": 26227378,
+   "time": "2026-10-19T15:00:23+00:00",
+   "pool": "0xe0554a476a092703abdb3ef35c80e0d76d32939f",
+   "pair": "USDC/WETH",
+   "bot": "0x410144dec85bb1929057829d54fb3b8d3f0ea4a3",
+   "bot_eoa": "0x3ee92cd00993a4488ae153ab41ac7947cbcbc1de",
+   "front": "0xed76639fc6e840610549ffcbc4c7af4421d5de0af409b79e5eff57d8dd733aa4",
+   "back": "0x303b31a51a567892f24491443ccc3d822fb93918ea93b087c7904338568b1987",
+   "victims": [
+    "0x9fe9c56c242f391ab37cb7332c540323ee7ddf44e326e631db1b0c1b4517ff5c"
+   ],
+   "profit_token": "WETH",
+   "profit_amount": 0.01300814,
+   "complex": false,
+   "gross_usd": 31.23,
+   "gas_usd": 30.96
+  },
+  {
+   "block": 26227345,
+   "time": "2026-10-19T14:53:47+00:00",
+   "pool": "0x40efafe9250b43b7c1be0ec1a75e4e7526559507",
+   "pair": "wildebeest/WETH",
+   "bot": "0x1f2f10d1c40777ae1da742455c65828ff36df387",
+   "bot_eoa": "0xae2fc483527b8ef99eb5d9b44875f005ba1fae13",
+   "front": "0x712959772788eb617d48c27c793e36aa1081808b9c23716827fb659864fc9503",
+   "back": "0x764e077050bbfdc49163b672cb448fe5b439f9122ac26bf041b6d7d67ac61b6d",
+   "victims": [
+    "0x451e18a4ed871ac80478e1ef1e978a3c1b95002ba2c12d05180e8456daa87259"
+   ],
+   "profit_token": "wildebeest",
+   "profit_amount": -0.04559895,
+   "complex": false,
+   "gross_usd": null,
+   "gas_usd": 2.82
+  },
+  {
+   "block": 26227330,
+   "time": "2026-10-19T14:50:35+00:00",
+   "pool": "0xf774c0cf63a7bb1a403fc7256242283c150e9b95",
+   "pair": "DOPE/WETH",
+   "bot": "0x0000000061b878403d27b500af1e900056707555",
+   "bot_eoa": "0x00000000dfe9a4e57631ce11d7854871756b0111",
+   "front": "0xe000e782519c8ccffcaca57132fdf53c33cf16bfe791bf5cd9c6b85813101cf2",
+   "back": "0xde57982ba7657f429bb86eca447ba3a86e8d57a7692a4a460dbf84661472b92a",
+   "victims": [
+    "0x0c1e687781b7cf51e82abb7e7013ee5018738d7292858ef8ae93a1ef140f73db"
+   ],
+   "profit_token": "WETH",
+   "profit_amount": 0.0001661,
+   "complex": false,
+   "gross_usd": 0.4,
+   "gas_usd": 0.39
+  },
   {
    "block": 26227303,
    "time": "2026-10-19T14:45:11+00:00",
@@ -2150,567 +2708,9 @@
    "complex": false,
    "gross_usd": 0.11,
    "gas_usd": 0.11
-  },
-  {
-   "block": 26224904,
-   "time": "2026-10-19T06:42:59+00:00",
-   "pool": "0x93f3923cf4eb2dd4cfd3beef42fc6d3178412121",
-   "pair": "GROKLET/WETH",
-   "bot": "0xe7b4543823b988503d5cbf86aaefb0e78d16958c",
-   "bot_eoa": "0xdee2f2b830cbc867cdc18c1df5da8728f2a50d4e",
-   "front": "0xb1bb667598e117d8e76a5e5a62123cbfe04320c9242d7fa9ac434f24c2c1316c",
-   "back": "0x234f88dfce43b2a273f933c099111475aaf2a73f7143850c9354a6e7824729ba",
-   "victims": [
-    "0x11629700020ef3393668deb523984e680282ba2c233d12c0ef7afded00984f20"
-   ],
-   "profit_token": "WETH",
-   "profit_amount": 0.00015718,
-   "complex": false,
-   "gross_usd": 0.38,
-   "gas_usd": 0.04
-  },
-  {
-   "block": 26224899,
-   "time": "2026-10-19T06:41:59+00:00",
-   "pool": "0x4efc9e2e3e77732ce2f9612b8f050082c01688bd",
-   "pair": "GREEN/WETH",
-   "bot": "0x000000000696b47886f2cf46ef2a607d4b41b8de",
-   "bot_eoa": "0x000000009cc4af7657cf6d6f91f65b9153f602bc",
-   "front": "0x78dac8811e8dcdf2b2b7c58e4d71a5e105532e4bab8614929c2c77d9bc74a915",
-   "back": "0x0ca34857b7e2d3c74b62682286f1525eec842af8662b01a1081651c2e9b4a47f",
-   "victims": [
-    "0xfb2355de302d5583b0b72cb642558163437cf14f85b7bfba8efe8d31032ca56e"
-   ],
-   "profit_token": "WETH",
-   "profit_amount": 0.00070705,
-   "complex": false,
-   "gross_usd": 1.72,
-   "gas_usd": 1.7
-  },
-  {
-   "block": 26224887,
-   "time": "2026-10-19T06:39:35+00:00",
-   "pool": "0x55d5c232d921b9eaa6b37b5845e439acd04b4dba",
-   "pair": "HEX/WETH",
-   "bot": "0x1f2f10d1c40777ae1da742455c65828ff36df387",
-   "bot_eoa": "0xae2fc483527b8ef99eb5d9b44875f005ba1fae13",
-   "front": "0xac8f3933c710195c9b9167eb006fe247a6ec8a683dc87a4b58366efe02853db7",
-   "back": "0xa99f969fe249d505fc2ebdf08050591a813d65ccac82efa0e6e7753e419ec775",
-   "victims": [
-    "0x7fd825baf70dd5799c76b317b4770f8824feb7542f5eaa9ae75329a8e57b6ff5"
-   ],
-   "profit_token": "HEX",
-   "profit_amount": 38193.58141325,
-   "complex": false,
-   "gross_usd": null,
-   "gas_usd": 5.52
-  },
-  {
-   "block": 26224852,
-   "time": "2026-10-19T06:32:35+00:00",
-   "pool": "0x874376be8231dad99aabf9ef0767b3cc054c60ee",
-   "pair": "LEASH/WETH",
-   "bot": "0x672061b75f770331b0c7c2a566a9ac0a9ba331d2",
-   "bot_eoa": "0x11111215b72e894c60f24e91ac2c8ccb1d373911",
-   "front": "0x402fae39ab772815b151ecf4d79f2963c78db618fa6934a0d7879ba4f623d9d8",
-   "back": "0xaa7902326753b940efdae54c3fc375ea4cc26f713b43177999dbaa31d3115fef",
-   "victims": [
-    "0xff50a85b28533090de2b67e97bc69a56ccf8e84a701ae9c31c52b206b98abc12"
-   ],
-   "profit_token": "WETH",
-   "profit_amount": 6.004e-05,
-   "complex": false,
-   "gross_usd": 0.15,
-   "gas_usd": 0.15
-  },
-  {
-   "block": 26224846,
-   "time": "2026-10-19T06:31:23+00:00",
-   "pool": "0x874376be8231dad99aabf9ef0767b3cc054c60ee",
-   "pair": "LEASH/WETH",
-   "bot": "0x410144dec85bb1929057829d54fb3b8d3f0ea4a3",
-   "bot_eoa": "0x3ee92cd00993a4488ae153ab41ac7947cbcbc1de",
-   "front": "0x65e3aff2b75f4fbafb24c2f301b3d1fcaef6ad8751c4027708e3f753ab6c6aa3",
-   "back": "0x858ba2252ad7d820c1fef97ff50682393b355384d52ff6f5076dc79f638ea4db",
-   "victims": [
-    "0xf2a37f4d6febd7dd99ded1252d5fe537f89f49b50c1bb0291b35a72b9b0dc5bf"
-   ],
-   "profit_token": "WETH",
-   "profit_amount": 6.02e-05,
-   "complex": false,
-   "gross_usd": 0.15,
-   "gas_usd": 0.15
-  },
-  {
-   "block": 26224811,
-   "time": "2026-10-19T06:24:23+00:00",
-   "pool": "0x9a1957bf96ff4f910a2a86e2bc5416dc6171e7e8",
-   "pair": "HARAMBEAI/WETH",
-   "bot": "0xbdb939c9cd180e400027a64a3ea6660f80817fa6",
-   "bot_eoa": "0xc68d3ba67e2755c9a2f46a0b51a1694ef53c0ea0",
-   "front": "0x81626d9e3fee91e5c2186e9aeea2fc1e3360141a40c9314b3079fcfe2204b713",
-   "back": "0x780a3560a144c25b2eae3a2e99753bb0047e6c048b2ff7ebed55d9b981110bfb",
-   "victims": [
-    "0x39869a55641f40abbe4f53f108d201c07e2325fbfe41b17273d373656c8feeed"
-   ],
-   "profit_token": "WETH",
-   "profit_amount": 0.00236162,
-   "complex": false,
-   "gross_usd": 5.73,
-   "gas_usd": 5.74
-  },
-  {
-   "block": 26224804,
-   "time": "2026-10-19T06:22:59+00:00",
-   "pool": "0xec5055067d60292ab2c514a1090bc8e014e4abaa",
-   "pair": "wstETH/USDT",
-   "bot": "0x672061b75f770331b0c7c2a566a9ac0a9ba331d2",
-   "bot_eoa": "0x11111215b72e894c60f24e91ac2c8ccb1d373911",
-   "front": "0x3a51136fd60f9b94dd721590574fd254aa917c7218f2bdfe82dfb9ccf8a3d25e",
-   "back": "0x487478b3493c27a4883a6d22e2a64bd4f7df27163553767b4adfbd23668462aa",
-   "victims": [
-    "0x62a8381eb43b69dc417a008dc396c7055ca2da1d0fb57f706dc46481d4777a6a"
-   ],
-   "profit_token": "USDT",
-   "profit_amount": 0.034265,
-   "complex": false,
-   "gross_usd": 0.03,
-   "gas_usd": 0.03
-  },
-  {
-   "block": 26224796,
-   "time": "2026-10-19T06:21:23+00:00",
-   "pool": "0x7c0cfa93c65733bf2034900fdc672673c4fa4e71",
-   "pair": "SIMD/WETH",
-   "bot": "0x410144dec85bb1929057829d54fb3b8d3f0ea4a3",
-   "bot_eoa": "0x3ee92cd00993a4488ae153ab41ac7947cbcbc1de",
-   "front": "0x1de8699508eb244023920f5609400b922831ce30ab2bcc7c13094339e96f11f2",
-   "back": "0x99bfd71d40899c9a08c3ba79791969f5476915b70f4d590866fd7487de11b079",
-   "victims": [
-    "0x10fdddefb9589fe599d1398df6012c67f385f5380d6a06c6ff3562811dc4b7cf"
-   ],
-   "profit_token": "WETH",
-   "profit_amount": 8.335e-05,
-   "complex": false,
-   "gross_usd": 0.2,
-   "gas_usd": 0.2
-  },
-  {
-   "block": 26224787,
-   "time": "2026-10-19T06:19:35+00:00",
-   "pool": "0x8ff9529e81c03c109a9e9c848cb3ac7615ce86ca",
-   "pair": "TEL/WETH",
-   "bot": "0xe56f811fb6c50180e512e4465fc1a6b18f4ee756",
-   "bot_eoa": "0xa98e43a4ec35d0a9612051df351dca70f8d4562b",
-   "front": "0x9dcb4a0cdc67d598517ad2cf55e8514041636babd200fc1227f950780a487add",
-   "back": "0x649a1a57d18bb920fdbc1c01d55cce0c58ff6831ba39da2828e90e9fdb963816",
-   "victims": [
-    "0xcf36374b4a4b419a569a2fadbb69fa19f7dc918b1b300c8bdbccecffa7e7e54f"
-   ],
-   "profit_token": "TEL",
-   "profit_amount": 646.01,
-   "complex": true,
-   "gross_usd": null,
-   "gas_usd": 0.52
-  },
-  {
-   "block": 26224756,
-   "time": "2026-10-19T06:13:23+00:00",
-   "pool": "0xb36ec83d844c0579ec2493f10b2087e96bb65460",
-   "pair": "ZIG/WETH",
-   "bot": "0x140022b7000081000001094700609300d2187dab",
-   "bot_eoa": "0x27c2a1733f14e1247c5feb1c37cd52ae7d0d2bf2",
-   "front": "0xb856cbc56a5fa0aacc71a1a1bbb7db3fccd7afb038f4f2e56b8dc65229614b06",
-   "back": "0xc17b053ca90093f40a510aeb971e7337edcad3b137945734f7d0ea0a4522e1cf",
-   "victims": [
-    "0x085c8a555c77e2142dcc3e6b884fd6f0c3f6b8e8d40ff6b14dfe5250ee868238"
-   ],
-   "profit_token": "WETH",
-   "profit_amount": 0.00070006,
-   "complex": false,
-   "gross_usd": 1.7,
-   "gas_usd": 1.68
-  },
-  {
-   "block": 26224739,
-   "time": "2026-10-19T06:09:59+00:00",
-   "pool": "0x4622df6fb2d9bee0dcdacf545acdb6a2b2f4f863",
-   "pair": "wstETH/USDC",
-   "bot": "0xe7b4543823b988503d5cbf86aaefb0e78d16958c",
-   "bot_eoa": "0xdee2f2b830cbc867cdc18c1df5da8728f2a50d4e",
-   "front": "0x7be37bb12823b9405d07093cf54136e3ac86b181278443abb43946fb612efa2e",
-   "back": "0x3a557e4cbeccd0cf91fc9e7ace3fe68695b6492d3fc2e8f75434221745347b96",
-   "victims": [
-    "0x3babd96300bf64fb9b111ddf79f68b149880725499bcdcbddea66c5355fe7e6a"
-   ],
-   "profit_token": "USDC",
-   "profit_amount": 0.417087,
-   "complex": true,
-   "gross_usd": null,
-   "gas_usd": 0.06
-  },
-  {
-   "block": 26224667,
-   "time": "2026-10-19T05:55:35+00:00",
-   "pool": "0xe3bc1e007867db76691c479d82dcbc5acc3e8b8e",
-   "pair": "MIB/WETH",
-   "bot": "0x72adb61214676c6cf6d390f0e85e96294634793e",
-   "bot_eoa": "0x4811d9cc00a36776285da24600000000066a7b33",
-   "front": "0x34873eed0db792e49feb7d8a95e760f1c8905571de284ef42cacd761b7f74a05",
-   "back": "0x40d796e51e487b5bc5ce22143755cd58e2f00a4246fb550fc4c40723f6adab86",
-   "victims": [
-    "0x95c5b614dbe72ccc2f8417904d04d1feb76ada2f02a20505335e8e8495cbc1e8"
-   ],
-   "profit_token": "WETH",
-   "profit_amount": 0.0004923,
-   "complex": false,
-   "gross_usd": 1.2,
-   "gas_usd": 1.18
-  },
-  {
-   "block": 26224638,
-   "time": "2026-10-19T05:49:47+00:00",
-   "pool": "0x0fe046a9027d8ce9a909f0c93ea2ddcfd8090f87",
-   "pair": "WFRAX/frxUSD",
-   "bot": "0x140022b7000081000001094700609300d2187dab",
-   "bot_eoa": "0x27c2a1733f14e1247c5feb1c37cd52ae7d0d2bf2",
-   "front": "0x856c2b9038a6612ea354e0b06cc3b0c3af30729f0639f12ef5bd2f888af36327",
-   "back": "0x4fbedb6c384660607511723952646c15926e96332f04688f87ed6d5dfc865834",
-   "victims": [
-    "0xdb4a0e26a09a0dca694e9370f7b9d725b863864b82cf8cfee0aaca4d986c958f"
-   ],
-   "profit_token": "frxUSD",
-   "profit_amount": 0.11547401,
-   "complex": false,
-   "gross_usd": null,
-   "gas_usd": 0.09
-  },
-  {
-   "block": 26224624,
-   "time": "2026-10-19T05:46:59+00:00",
-   "pool": "0xf774c0cf63a7bb1a403fc7256242283c150e9b95",
-   "pair": "DOPE/WETH",
-   "bot": "0x410144dec85bb1929057829d54fb3b8d3f0ea4a3",
-   "bot_eoa": "0x3ee92cd00993a4488ae153ab41ac7947cbcbc1de",
-   "front": "0xb0e50149f9f92b97345ba8d4c2944063bc83008961a3739862dab13bfb846f67",
-   "back": "0xc727eb3591a8708ccd2a7f79869c5cb5cca754f862ae41c0c9b14d0df816bd7c",
-   "victims": [
-    "0x1bbb96383b5def97c7bcd6aad5d0febf505b875a5be2627c11d6c14d62c0d619"
-   ],
-   "profit_token": "WETH",
-   "profit_amount": 0.00418606,
-   "complex": false,
-   "gross_usd": 10.16,
-   "gas_usd": 10.16
-  },
-  {
-   "block": 26224620,
-   "time": "2026-10-19T05:46:11+00:00",
-   "pool": "0xdb1c3cbad0f46f1d2d8cb334127cb587af689776",
-   "pair": "WETH/FORK",
-   "bot": "0x1f2f10d1c40777ae1da742455c65828ff36df387",
-   "bot_eoa": "0xae2fc483527b8ef99eb5d9b44875f005ba1fae13",
-   "front": "0xa8a499cca612ef77f57a61cfc93f0750faa406833f037003c79b60bc7e7beb4c",
-   "back": "0xa01ec0dd171bd9db72d2dc69312051e804a0d43891da265b4c98c317c6749d25",
-   "victims": [
-    "0x4045c6df823a4775eb74c9e6d55f53e90d0477ed0ca8f424a3983daa6ee994bd"
-   ],
-   "profit_token": "WETH",
-   "profit_amount": 0.00087065,
-   "complex": false,
-   "gross_usd": 2.11,
-   "gas_usd": 2.11
-  },
-  {
-   "block": 26224592,
-   "time": "2026-10-19T05:40:23+00:00",
-   "pool": "0x41a561b972039a9ccb975a4c17b84c9f95099e15",
-   "pair": "ADI/USDC",
-   "bot": "0x410144dec85bb1929057829d54fb3b8d3f0ea4a3",
-   "bot_eoa": "0x3ee92cd00993a4488ae153ab41ac7947cbcbc1de",
-   "front": "0x9dbd5f194ab7d852252277e0a371913803e9a431b5197f2d4ff88a854afce286",
-   "back": "0x581dd23c9b6eb095069b133644be89f3bb9a9112cc177c1c7a826336b433fc65",
-   "victims": [
-    "0x26a486df9b012990cd8b05ce92a27d7d8020af6352f676241359b86d3772390d"
-   ],
-   "profit_token": "USDC",
-   "profit_amount": 9.252437,
-   "complex": true,
-   "gross_usd": null,
-   "gas_usd": 9.25
-  },
-  {
-   "block": 26224583,
-   "time": "2026-10-19T05:38:35+00:00",
-   "pool": "0x55d5c232d921b9eaa6b37b5845e439acd04b4dba",
-   "pair": "HEX/WETH",
-   "bot": "0x1f2f10d1c40777ae1da742455c65828ff36df387",
-   "bot_eoa": "0xae2fc483527b8ef99eb5d9b44875f005ba1fae13",
-   "front": "0xf5b20c1582cc64bf4c8c6972c9c8bccaab1a132d33653a5f9c957dbfba3278d1",
-   "back": "0x6fc128a2b7f72452ff0a2742eec4152ccdde4c449f9a23789cc5ffb1233eca25",
-   "victims": [
-    "0x16cda8c6d55f01ccc7acd565146caef88555c8c8982f0ed87776152589658ee1"
-   ],
-   "profit_token": "WETH",
-   "profit_amount": 0.00191787,
-   "complex": true,
-   "gross_usd": null,
-   "gas_usd": 7.88
-  },
-  {
-   "block": 26224583,
-   "time": "2026-10-19T05:38:35+00:00",
-   "pool": "0xf6dcdce0ac3001b2f67f750bc64ea5beb37b5824",
-   "pair": "HEX/USDC",
-   "bot": "0x1f2f10d1c40777ae1da742455c65828ff36df387",
-   "bot_eoa": "0xae2fc483527b8ef99eb5d9b44875f005ba1fae13",
-   "front": "0xf5b20c1582cc64bf4c8c6972c9c8bccaab1a132d33653a5f9c957dbfba3278d1",
-   "back": "0x6fc128a2b7f72452ff0a2742eec4152ccdde4c449f9a23789cc5ffb1233eca25",
-   "victims": [
-    "0x16cda8c6d55f01ccc7acd565146caef88555c8c8982f0ed87776152589658ee1"
-   ],
-   "profit_token": "USDC",
-   "profit_amount": 0.905031,
-   "complex": true,
-   "gross_usd": null,
-   "gas_usd": 7.88
-  },
-  {
-   "block": 26224583,
-   "time": "2026-10-19T05:38:35+00:00",
-   "pool": "0x1d5d2539a49154c5659737151f53b21a98b4834f",
-   "pair": "HEX/DRAK",
-   "bot": "0x1f2f10d1c40777ae1da742455c65828ff36df387",
-   "bot_eoa": "0xae2fc483527b8ef99eb5d9b44875f005ba1fae13",
-   "front": "0xf5b20c1582cc64bf4c8c6972c9c8bccaab1a132d33653a5f9c957dbfba3278d1",
-   "back": "0x6fc128a2b7f72452ff0a2742eec4152ccdde4c449f9a23789cc5ffb1233eca25",
-   "victims": [
-    "0x16cda8c6d55f01ccc7acd565146caef88555c8c8982f0ed87776152589658ee1"
-   ],
-   "profit_token": "DRAK",
-   "profit_amount": 0.08,
-   "complex": true,
-   "gross_usd": null,
-   "gas_usd": 7.88
-  },
-  {
-   "block": 26224583,
-   "time": "2026-10-19T05:38:35+00:00",
-   "pool": "0xbbb9bf440d0f686487925fef3b0a0f9aa67753f6",
-   "pair": "HEX/USDT",
-   "bot": "0x1f2f10d1c40777ae1da742455c65828ff36df387",
-   "bot_eoa": "0xae2fc483527b8ef99eb5d9b44875f005ba1fae13",
-   "front": "0xf5b20c1582cc64bf4c8c6972c9c8bccaab1a132d33653a5f9c957dbfba3278d1",
-   "back": "0x6fc128a2b7f72452ff0a2742eec4152ccdde4c449f9a23789cc5ffb1233eca25",
-   "victims": [
-    "0x16cda8c6d55f01ccc7acd565146caef88555c8c8982f0ed87776152589658ee1"
-   ],
-   "profit_token": "USDT",
-   "profit_amount": 0.034271,
-   "complex": true,
-   "gross_usd": null,
-   "gas_usd": 7.88
-  },
-  {
-   "block": 26224577,
-   "time": "2026-10-19T05:37:23+00:00",
-   "pool": "0x64c9cfa988bbe7b2df671af345bcf8fa904cebb8",
-   "pair": "WETH/VAL",
-   "bot": "0xbadc10b1b8b26efd93e511892721905279d8c0de",
-   "bot_eoa": "0x5213c7d658d5bb2b34f1cd30665b4cb53ce5c5b6",
-   "front": "0xea1e50345ab393dc4e0f7135de2ab2931f845477f3da9c66061856d12404913a",
-   "back": "0xac62c158596ac3f8011802fbb88233514893f99df6cfe5fa08e97ca94d11b123",
-   "victims": [
-    "0x361994abace5416bb75818d70864e1000b8275485706a3c9a58ebd34717b2020"
-   ],
-   "profit_token": "WETH",
-   "profit_amount": 0.00013697,
-   "complex": false,
-   "gross_usd": 0.33,
-   "gas_usd": 0.32
-  },
-  {
-   "block": 26224570,
-   "time": "2026-10-19T05:35:59+00:00",
-   "pool": "0x2e81ec0b8b4022fac83a21b2f2b4b8f5ed744d70",
-   "pair": "WETH/GRT",
-   "bot": "0x672061b75f770331b0c7c2a566a9ac0a9ba331d2",
-   "bot_eoa": "0x11111215b72e894c60f24e91ac2c8ccb1d373911",
-   "front": "0xa9574a9e0bc4ee1a2f1494771277b529fe2e4579b4c0071088e73ecea9714b8b",
-   "back": "0xd4dc0661967baca03dfd8f23b11bb2a4cc4a6cd3a371f31f032f5da2a3e63734",
-   "victims": [
-    "0x2c3a210395c3ffc7e149fa5090b6dd9f826f5fe5d0b1e5b8dbf076cb790b01fa"
-   ],
-   "profit_token": "WETH",
-   "profit_amount": 0.0006821,
-   "complex": false,
-   "gross_usd": 1.66,
-   "gas_usd": 1.63
-  },
-  {
-   "block": 26224560,
-   "time": "2026-10-19T05:33:59+00:00",
-   "pool": "0x2359dd2c887d6912d9e34f2ee8f2b0d5d9e50726",
-   "pair": "HANDY/WETH",
-   "bot": "0x672061b75f770331b0c7c2a566a9ac0a9ba331d2",
-   "bot_eoa": "0x11111215b72e894c60f24e91ac2c8ccb1d373911",
-   "front": "0x9520293057e49ea67e7db9cbc3664dee4a72f201d7ff8eea27090e5df1c8ae36",
-   "back": "0xfb21553a37b4111b9b2d9a418a3a2c88bd54ffcbab74a647b33d7d8e49e81117",
-   "victims": [
-    "0xd6f0849f594fc56e83b38eb1b67cc3b082152b40ab1202b9c80b566a92f247f0"
-   ],
-   "profit_token": "WETH",
-   "profit_amount": 2.741e-05,
-   "complex": false,
-   "gross_usd": 0.07,
-   "gas_usd": 0.07
-  },
-  {
-   "block": 26224554,
-   "time": "2026-10-19T05:32:47+00:00",
-   "pool": "0x38fc5b6a04eabb96fbb6db312c8914acdaab08dd",
-   "pair": "USDT/RIWA",
-   "bot": "0x672061b75f770331b0c7c2a566a9ac0a9ba331d2",
-   "bot_eoa": "0x11111215b72e894c60f24e91ac2c8ccb1d373911",
-   "front": "0xd2dbb27ba3b8d41f3c9dc88439820dcd5e39fe29b85f15a1c80c087391cf7e35",
-   "back": "0x3558b64625a63c6e3482af08f01a95370c8ef74710cc183c3f2525eb48f689b3",
-   "victims": [
-    "0x7cb1b27e418c54c5dbe0a1587c9f7cefea486c8174e7f1b29ebf7e7fe6fdc773"
-   ],
-   "profit_token": "USDT",
-   "profit_amount": 0.064929,
-   "complex": false,
-   "gross_usd": 0.06,
-   "gas_usd": 0.06
-  },
-  {
-   "block": 26224543,
-   "time": "2026-10-19T05:30:35+00:00",
-   "pool": "0x60594a405d53811d3bc4766596efd80fd545a270",
-   "pair": "DAI/WETH",
-   "bot": "0xe7b4543823b988503d5cbf86aaefb0e78d16958c",
-   "bot_eoa": "0xdee2f2b830cbc867cdc18c1df5da8728f2a50d4e",
-   "front": "0x086a5e621d5b06e2c511ce62f9f3404131631567b1e9c716d2495b4c3dd019d9",
-   "back": "0x1b4910b99b1a290aa89203ea9f82e47d6d69e763088048324035ef3c6b313bdf",
-   "victims": [
-    "0x9b04955d14d2da458e366f39eb8ecc68b08d2d03f5031f3a729b2789fd952360"
-   ],
-   "profit_token": "DAI",
-   "profit_amount": 14.11061804,
-   "complex": true,
-   "gross_usd": null,
-   "gas_usd": 0.07
-  },
-  {
-   "block": 26224543,
-   "time": "2026-10-19T05:30:35+00:00",
-   "pool": "0xe0554a476a092703abdb3ef35c80e0d76d32939f",
-   "pair": "USDC/WETH",
-   "bot": "0x000000000035b5e5ad9019092c665357240f594e",
-   "bot_eoa": "0x654fae4aa229d104cabead47e56703f58b174be4",
-   "front": "0x96064d765589cc67362952554e63f036c5a6eff7325c78cd2b8cc88ee1032334",
-   "back": "0xf2970ca8161ce4b2ebbe9de7d03592e3da4cefb917a35f716a0216ee494b8546",
-   "victims": [
-    "0xb9ec2679aeaa4c42b22511790b877aca7bfdc355b0c7dc568dda914d3c41d24d"
-   ],
-   "profit_token": "WETH",
-   "profit_amount": 0.00732587,
-   "complex": false,
-   "gross_usd": 17.79,
-   "gas_usd": 0.12
-  },
-  {
-   "block": 26224535,
-   "time": "2026-10-19T05:28:59+00:00",
-   "pool": "0x2084c8115d97a12114a70a27198c3591b6df7d3e",
-   "pair": "WETH/MFT",
-   "bot": "0xbadc0de76438f9524d42c219b390636196bfbdfc",
-   "bot_eoa": "0x07224080cf82603d3bbfe9ddcf359baa339164cb",
-   "front": "0xf505c8ea6214b75398896f433f11c50d00bf8c759927ee91cfcbc8447b1e2f2a",
-   "back": "0xc50f95570635938a60b535b6d1e4c62a8b07b9c304d8835ddb4ac2ffe537ab52",
-   "victims": [
-    "0x18bdbcf5622ef703d60db626d3f38ca2bc3e2e31270b061666dcf42a58124217"
-   ],
-   "profit_token": "MFT",
-   "profit_amount": 3966.67715327,
-   "complex": true,
-   "gross_usd": null,
-   "gas_usd": 0.07
-  },
-  {
-   "block": 26224502,
-   "time": "2026-10-19T05:22:23+00:00",
-   "pool": "0x72c0b7a76fad6e91fee4be2b622b873d1ab61a31",
-   "pair": "WETH/CLORE",
-   "bot": "0xbadc10b1b8b26efd93e511892721905279d8c0de",
-   "bot_eoa": "0x5213c7d658d5bb2b34f1cd30665b4cb53ce5c5b6",
-   "front": "0x4b42876a0735b193033df243fd95df0e9f1e38332bf934a3699ef377a109b99e",
-   "back": "0xa400c80ecf5617f7ecd6a88dfe34c711be0508c111f0258a30166bcb614be827",
-   "victims": [
-    "0x1f3e4a7df7c619749815ef27c620911d9f93b0901738d85cbd5ef2bfcd86e1ec"
-   ],
-   "profit_token": "WETH",
-   "profit_amount": 5.794e-05,
-   "complex": false,
-   "gross_usd": 0.14,
-   "gas_usd": 0.13
-  },
-  {
-   "block": 26224498,
-   "time": "2026-10-19T05:21:35+00:00",
-   "pool": "0xf774c0cf63a7bb1a403fc7256242283c150e9b95",
-   "pair": "DOPE/WETH",
-   "bot": "0xbdb939c9cd180e400027a64a3ea6660f80817fa6",
-   "bot_eoa": "0xc68d3ba67e2755c9a2f46a0b51a1694ef53c0ea0",
-   "front": "0xb42144e639e933be9714e9b795a78fd704117c55faad683188495ee5f6fcbdb0",
-   "back": "0x1ceebbf7b5b8aa5389b1a35b6a85396f60464945fc3bc14950b117be60a05453",
-   "victims": [
-    "0xc85ace04bc0b2ee1247738e220ac39255c17ccfac56e7669fad37aca6777f5f1"
-   ],
-   "profit_token": "WETH",
-   "profit_amount": 0.00093486,
-   "complex": false,
-   "gross_usd": 2.27,
-   "gas_usd": 2.27
-  },
-  {
-   "block": 26224483,
-   "time": "2026-10-19T05:18:35+00:00",
-   "pool": "0x894d4e6d3d2abc64fc0de0e4e2ea63a93bc9c520",
-   "pair": "USDC/IMD",
-   "bot": "0x00acd5005200e7009beb000000e35e1e002b5565",
-   "bot_eoa": "0x00cf7439ff00f30000540000ac00a4055000c5ab",
-   "front": "0xb597fb3e5965979834543f5e6dac2cef16aecabd36bddf3ba9441abdc2250781",
-   "back": "0xd352a98d5a4f76ec23ec65ca90a680fa213e51f1d3faf5ce4fe800f07e29375a",
-   "victims": [
-    "0x3e64d48d15fa4bd1c6f9342c435e81065849d6e68c6e3684e471f19208b870fe"
-   ],
-   "profit_token": "USDC",
-   "profit_amount": 0.859904,
-   "complex": false,
-   "gross_usd": 0.86,
-   "gas_usd": 0.72
-  },
-  {
-   "block": 26224445,
-   "time": "2026-10-19T05:10:59+00:00",
-   "pool": "0x4eefe02fce5b53ca33c7717bbd8ad3c9cb0609f1",
-   "pair": "WETH/ZENT",
-   "bot": "0x1f2f10d1c40777ae1da742455c65828ff36df387",
-   "bot_eoa": "0xae2fc483527b8ef99eb5d9b44875f005ba1fae13",
-   "front": "0xdf6fa2c16fa749f5f5ab676d364bde43935c66d8148d2a242ce40abc4b1e6cd1",
-   "back": "0xc0eb3c7466ba68e7fd8b9d9dd05fb09eadc117749e2da1dcba38346e290ec1c3",
-   "victims": [
-    "0x4824f6dfdc1668456f3266f598394528f4fd2d6a1d3389b893e81da32516322b"
-   ],
-   "profit_token": "WETH",
-   "profit_amount": 0.00014039,
-   "complex": false,
-   "gross_usd": 0.34,
-   "gas_usd": 9.26
   }
  ],
- "count_24h": 311,
+ "count_24h": 342,
  "example": {
   "block": 26227220,
   "time": "2026-10-19T14:28:23+00:00",
@@ -2740,27 +2740,27 @@
   },
   {
    "bot": "0xe7b4543823b988503d5cbf86aaefb0e78d16958c",
-   "count": 29,
-   "victims": 29,
-   "gross_usd": 108.52,
-   "gas_usd": 0.79,
+   "count": 31,
+   "victims": 31,
+   "gross_usd": 109.38,
+   "gas_usd": 1.13,
    "unpriced": 16
   },
   {
-   "bot": "0xa462d9acaccb141ce7f17213b95198fe248c27a1",
-   "count": 2,
-   "victims": 2,
-   "gross_usd": 27.97,
-   "gas_usd": 0.1,
-   "unpriced": 1
+   "bot": "0x6338afee3ff32599bff2ce3d8b7604bd6d6a41a7",
+   "count": 5,
+   "victims": 6,
+   "gross_usd": 30.95,
+   "gas_usd": 0.6,
+   "unpriced": 2
   },
   {
-   "bot": "0x6338afee3ff32599bff2ce3d8b7604bd6d6a41a7",
+   "bot": "0xa462d9acaccb141ce7f17213b95198fe248c27a1",
    "count": 4,
-   "victims": 5,
-   "gross_usd": 26.78,
-   "gas_usd": 0.23,
-   "unpriced": 2
+   "victims": 4,
+   "gross_usd": 27.97,
+   "gas_usd": 0.1,
+   "unpriced": 3
   },
   {
    "bot": "0xbadc0de76438f9524d42c219b390636196bfbdfc",
@@ -2772,10 +2772,10 @@
   },
   {
    "bot": "0x000000000035b5e5ad9019092c665357240f594e",
-   "count": 1,
-   "victims": 1,
+   "count": 2,
+   "victims": 2,
    "gross_usd": 17.79,
-   "gas_usd": 0.12,
+   "gas_usd": 0.94,
    "unpriced": 0
   },
   {
@@ -2788,10 +2788,10 @@
   },
   {
    "bot": "0x0000000061b878403d27b500af1e900056707555",
-   "count": 15,
-   "victims": 17,
-   "gross_usd": 98.4,
-   "gas_usd": 96.45,
+   "count": 19,
+   "victims": 21,
+   "gross_usd": 99.79,
+   "gas_usd": 97.81,
    "unpriced": 0
   },
   {
@@ -2803,11 +2803,19 @@
    "unpriced": 0
   },
   {
+   "bot": "0x410144dec85bb1929057829d54fb3b8d3f0ea4a3",
+   "count": 37,
+   "victims": 37,
+   "gross_usd": 316.0,
+   "gas_usd": 315.38,
+   "unpriced": 3
+  },
+  {
    "bot": "0x672061b75f770331b0c7c2a566a9ac0a9ba331d2",
-   "count": 48,
-   "victims": 48,
-   "gross_usd": 59.66,
-   "gas_usd": 59.18,
+   "count": 49,
+   "victims": 49,
+   "gross_usd": 59.9,
+   "gas_usd": 59.42,
    "unpriced": 0
   },
   {
@@ -2825,14 +2833,6 @@
    "gross_usd": 19.89,
    "gas_usd": 19.58,
    "unpriced": 7
-  },
-  {
-   "bot": "0x410144dec85bb1929057829d54fb3b8d3f0ea4a3",
-   "count": 34,
-   "victims": 34,
-   "gross_usd": 239.79,
-   "gas_usd": 239.54,
-   "unpriced": 3
   },
   {
    "bot": "0xbadc10b1b8b26efd93e511892721905279d8c0de",
@@ -2862,50 +2862,50 @@
   },
   {
    "bot": "0x45e9b04942176a513b22acc1ced75c34d2fd9215",
-   "count": 29,
-   "victims": 40,
+   "count": 28,
+   "victims": 39,
    "gross_usd": 687.74,
    "gas_usd": 67.36,
-   "unpriced": 14
+   "unpriced": 13
   },
   {
    "bot": "0x000000000035b5e5ad9019092c665357240f594e",
    "count": 18,
    "victims": 18,
-   "gross_usd": 305.48,
-   "gas_usd": 5.28,
+   "gross_usd": 288.92,
+   "gas_usd": 4.76,
    "unpriced": 4
   },
   {
    "bot": "0xa462d9acaccb141ce7f17213b95198fe248c27a1",
-   "count": 26,
-   "victims": 26,
+   "count": 27,
+   "victims": 27,
    "gross_usd": 256.55,
    "gas_usd": 4.83,
-   "unpriced": 22
+   "unpriced": 23
   },
   {
    "bot": "0x5f1d3cde31775961269b89faae997e89d25d0c31",
-   "count": 55,
-   "victims": 55,
-   "gross_usd": 240.55,
-   "gas_usd": 9.02,
-   "unpriced": 13
+   "count": 53,
+   "victims": 53,
+   "gross_usd": 232.43,
+   "gas_usd": 8.8,
+   "unpriced": 12
   },
   {
    "bot": "0x6338afee3ff32599bff2ce3d8b7604bd6d6a41a7",
    "count": 52,
    "victims": 53,
-   "gross_usd": 216.58,
-   "gas_usd": 7.85,
-   "unpriced": 19
+   "gross_usd": 220.75,
+   "gas_usd": 8.22,
+   "unpriced": 18
   },
   {
    "bot": "0xe7b4543823b988503d5cbf86aaefb0e78d16958c",
-   "count": 48,
-   "victims": 48,
-   "gross_usd": 195.15,
-   "gas_usd": 2.41,
+   "count": 50,
+   "victims": 50,
+   "gross_usd": 196.01,
+   "gas_usd": 2.75,
    "unpriced": 21
   },
   {
@@ -2918,11 +2918,11 @@
   },
   {
    "bot": "0xbadc0de76438f9524d42c219b390636196bfbdfc",
-   "count": 36,
-   "victims": 36,
-   "gross_usd": 83.16,
-   "gas_usd": 2.69,
-   "unpriced": 22
+   "count": 34,
+   "victims": 34,
+   "gross_usd": 64.68,
+   "gas_usd": 1.93,
+   "unpriced": 21
   },
   {
    "bot": "0x4b1d532131fdf4a8e6bacc84dc309442966eb3ff",
@@ -2934,11 +2934,11 @@
   },
   {
    "bot": "0x140022b7000081000001094700609300d2187dab",
-   "count": 94,
-   "victims": 95,
-   "gross_usd": 207.25,
-   "gas_usd": 166.73,
-   "unpriced": 47
+   "count": 95,
+   "victims": 96,
+   "gross_usd": 213.66,
+   "gas_usd": 173.07,
+   "unpriced": 46
   },
   {
    "bot": "0x7a250d5630b4cf539739df2c5dacb4c659f2488d",
@@ -2950,10 +2950,10 @@
   },
   {
    "bot": "0x00acd5005200e7009beb000000e35e1e002b5565",
-   "count": 28,
-   "victims": 28,
-   "gross_usd": 57.52,
-   "gas_usd": 49.74,
+   "count": 27,
+   "victims": 27,
+   "gross_usd": 57.21,
+   "gas_usd": 49.52,
    "unpriced": 2
   },
   {
@@ -2966,10 +2966,10 @@
   },
   {
    "bot": "0x672061b75f770331b0c7c2a566a9ac0a9ba331d2",
-   "count": 331,
-   "victims": 331,
-   "gross_usd": 855.04,
-   "gas_usd": 849.07,
+   "count": 325,
+   "victims": 325,
+   "gross_usd": 848.88,
+   "gas_usd": 842.87,
    "unpriced": 0
   }
  ],
@@ -3039,29 +3039,15 @@
   },
   {
    "day": "2026-10-19",
-   "count": 226,
-   "victims": 238,
-   "gross_usd": 1492.55,
-   "net_usd": 457.06,
-   "blocks": 4418,
-   "bots": 21
+   "count": 257,
+   "victims": 269,
+   "gross_usd": 1588.35,
+   "net_usd": 449.99,
+   "blocks": 5046,
+   "bots": 23
   }
  ],
  "gas": [
-  {
-   "hour": "2026-10-17T14:00Z",
-   "base_gwei": 0.068,
-   "full_pct": 50.4,
-   "txs_per_block": 236.7,
-   "blocks": 299
-  },
-  {
-   "hour": "2026-10-17T15:00Z",
-   "base_gwei": 0.061,
-   "full_pct": 50.5,
-   "txs_per_block": 258.8,
-   "blocks": 299
-  },
   {
    "hour": "2026-10-17T16:00Z",
    "base_gwei": 0.059,
@@ -3247,9 +3233,23 @@
   {
    "hour": "2026-10-19T14:00Z",
    "base_gwei": 0.296,
-   "full_pct": 50.4,
-   "txs_per_block": 286.0,
-   "blocks": 235
+   "full_pct": 50.1,
+   "txs_per_block": 286.3,
+   "blocks": 298
+  },
+  {
+   "hour": "2026-10-19T15:00Z",
+   "base_gwei": 0.224,
+   "full_pct": 49.8,
+   "txs_per_block": 282.5,
+   "blocks": 300
+  },
+  {
+   "hour": "2026-10-19T16:00Z",
+   "base_gwei": 0.169,
+   "full_pct": 50.1,
+   "txs_per_block": 299.3,
+   "blocks": 265
   }
  ]
 }
