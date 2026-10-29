@@ -114,8 +114,9 @@
   <div class="how" id="how"></div>
 
   <h2><span class="label">WHO PROFITS</span></h2>
-  <div class="center"><span class="seg" id="botSeg"><button data-v="bots_24h" class="on">Last 24 hours</button><button data-v="bots_7d">Last 7 days</button></span></div>
+  <div class="center"><span class="seg" id="botSeg"><button data-v="bots_24h" class="on">Last 24 hours</button><button data-v="bots_7d">Last 7 days</button><button data-v="bots_all">All time</button></span></div>
   <div class="tblwrap"><table id="bots"></table></div>
+  <div class="center small" id="botsNote"></div>
   <div class="charts" id="dayCharts"></div>
 
   <h2><span class="label">LATEST SANDWICHES</span></h2>
@@ -296,20 +297,27 @@ function main() {
     const t = $("bots"); t.replaceChildren();
     const rows = D[key];
     const hd = el("tr");
-    [["#"], ["Bot contract"], ["Sandwiches", 1], ["Victims", 1], ["Gross", 1], ["Gas paid", 1], ["Left after gas", 1], ["Kept", 1]]
+    [["#"], ["Bot contract"], ["Sandwiches", 1], ["Victims", 1], ["Gross", 1], ["Gas paid", 1], ["Left after gas", 1], ["Kept", 1], ["First seen"], ["Last seen"]]
       .forEach(([h, n]) => hd.append(el("th", n ? "num" : null, h)));
     t.append(hd);
-    if (!rows.length) { const tr = el("tr"), td = el("td", "empty", "No sandwiches found yet."); td.colSpan = 8; tr.append(td); t.append(tr); return; }
+    if (!rows.length) { const tr = el("tr"), td = el("td", "empty", "No sandwiches found yet."); td.colSpan = 10; tr.append(td); t.append(tr); return; }
+    const day = (iso) => new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric" });
     rows.forEach((b, i) => {
       const tr = el("tr"), net = b.gross_usd - b.gas_usd, a = el("td");
       a.append(link(ES + "address/" + b.bot, short(b.bot)));
       tr.append(el("td", null, i + 1), a, el("td", "num", b.count), el("td", "num", b.victims),
         el("td", "num", usd(b.gross_usd)), el("td", "num", usd(b.gas_usd)),
         el("td", "num " + (net >= 0 ? "pos" : "neg"), usd(net)),
-        el("td", "num", b.gross_usd > 0 ? Math.round(100 * net / b.gross_usd) + "%" : "—"));
+        el("td", "num", b.gross_usd > 0 ? Math.round(100 * net / b.gross_usd) + "%" : "—"),
+        el("td", null, b.first_seen ? day(b.first_seen) : "—"), el("td", null, b.last_seen ? day(b.last_seen) : "—"));
       if (b.unpriced) tr.title = `${b.unpriced} sandwich(es) without a dollar value (other tokens, or complex multi-pool trades) are not included in the $ columns`;
       t.append(tr);
     });
+    const note = $("botsNote"); note.replaceChildren();
+    if (key === "bots_all") {
+      const since = D.first_scan ? new Date(D.first_scan).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "the first scan";
+      note.append(`Top ${rows.length} of ${D.bots_all_count} bots seen since ${since}. `, link("data/bots.csv", "Download all bots (CSV)"));
+    }
   }
   botTable("bots_24h");
   $("botSeg").addEventListener("click", (e) => {

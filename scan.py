@@ -12,6 +12,7 @@ payments to block builders are not visible in receipts, so real net profit is lo
 
 Usage: python3 scan.py           (writes data/mev.js + data/mev.json; history stays in data/mev_history/)
 """
+import csv
 import json
 import time
 import urllib.request
@@ -29,7 +30,6 @@ RPCS = ["https://ethereum-rpc.publicnode.com", "https://eth.llamarpc.com"]
 MAX_BLOCKS = 900                     # ~3 hours of blocks; one run never takes more than a few minutes
 FIRST_RUN_BLOCKS = 300               # ~1 hour on the very first run
 BATCH = 10
-KEEP_DAYS = 30
 
 SWAP_V2 = "0xd78ad95fa46c994b6551d0da85fc275fe613ce37657fb8d5e3d130840159d822"
 SWAP_V3 = "0xc42079f94a6350d7e6235f29174924f928cc2ac818eb64fed8004e115fbcca67"
@@ -300,9 +300,6 @@ def main():
             old = d["gas"].get(hour, {"blocks": 0, "base_gwei": 0.0, "full": 0.0, "txs": 0})
             d["gas"][hour] = {k: old[k] + g[k] for k in old}
         f.write_text(json.dumps(d))
-    for f in HIST.glob("*.json"):
-        if f.stem < (datetime.now(timezone.utc) - timedelta(days=KEEP_DAYS)).strftime("%Y-%m-%d"):
-            f.unlink()
 
     state["last_block"] = head
     state.setdefault("first_scan", datetime.now(timezone.utc).isoformat(timespec="seconds"))
@@ -327,7 +324,8 @@ def build_output(eth_usd):
         agg = {}
         for s in items:
             b = agg.setdefault(s["bot"], {"bot": s["bot"], "count": 0, "victims": 0, "gross_usd": 0.0,
-                                          "gas_usd": 0.0, "unpriced": 0})
+                                          "gas_usd": 0.0, "unpriced": 0, "first_seen": s["time"], "last_seen": s["time"]})
+            b["first_seen"], b["last_seen"] = min(b["first_seen"], s["time"]), max(b["last_seen"], s["time"])
             b["count"] += 1
             b["victims"] += len(s["victims"])
             if s["gross_usd"] is None:
@@ -359,6 +357,8 @@ def build_output(eth_usd):
                             "txs_per_block": round(h["txs"] / h["blocks"], 1), "blocks": h["blocks"]})
     gas.sort(key=lambda h: h["hour"])
 
+    all_bots = bots(all_s)
+    write_csv(all_bots)
     week_cut = (now - timedelta(days=7)).isoformat()
     biggest = max((s for s in last24 if s["gross_usd"] is not None), key=lambda s: s["gross_usd"], default=None)
     out = {
@@ -367,10 +367,24 @@ def build_output(eth_usd):
         "blocks_24h": sum(h["blocks"] for h in gas if h["hour"] >= (now - timedelta(hours=24)).strftime("%Y-%m-%dT%H:00Z")),
         "recent": last24[:150], "count_24h": len(last24), "example": biggest,
         "bots_24h": bots(last24)[:15], "bots_7d": bots([s for s in all_s if s["time"] >= week_cut])[:15],
+        "bots_all": all_bots[:50], "bots_all_count": len(all_bots),
         "daily": daily, "gas": gas,
     }
     (DATA / "mev.json").write_text(json.dumps(out, indent=1))
     (DATA / "mev.js").write_text("window.MEV_DATA = " + json.dumps(out) + ";\n")
+
+
+def write_csv(rows):
+    """Every bot ever seen, for spreadsheets: data/bots.csv."""
+    with open(DATA / "bots.csv", "w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["bot_contract", "sandwiches", "victims", "gross_usd", "gas_usd", "left_after_gas_usd", "kept_pct",
+                    "sandwiches_without_usd", "first_seen_utc", "last_seen_utc"])
+        for b in rows:
+            left = round(b["gross_usd"] - b["gas_usd"], 2)
+            kept = round(100 * left / b["gross_usd"], 1) if b["gross_usd"] > 0 else ""
+            w.writerow([b["bot"], b["count"], b["victims"], b["gross_usd"], b["gas_usd"], left, kept,
+                        b["unpriced"], b["first_seen"], b["last_seen"]])
 
 
 if __name__ == "__main__":
