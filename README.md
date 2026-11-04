@@ -13,33 +13,40 @@ A research page that shows how busy Ethereum is and how much **sandwich bots** t
 
 A *sandwich* is when a bot sees your pending swap, buys just before you (pushing the price up), lets your swap go through at the worse price, and sells right after you. The page explains this step by step with the biggest real example from the last 24 hours, linked to Etherscan.
 
-- **Totals for the last 24 hours:** sandwiches, victim trades, active bots, the bots' gross gain, how much of it went to gas, and what was left.
-- **Who profits:** a leaderboard of bot contracts (24 hours / 7 days / all time) with gross gain, gas paid, the share they kept, and when each bot was first and last seen. Every bot ever detected can be downloaded as [`data/bots.csv`](data/bots.csv).
+- **Totals for the last 24 hours:** sandwiches, victim trades, active bots, the bots' gross gain, how much of it went to gas and to builders, and what was left.
+- **Who profits:** a leaderboard of bot contracts (24 hours / 7 days / all time) with gross gain, gas paid, direct payments to builders, the share they kept, and when each bot was first and last seen. Every bot ever detected can be downloaded as [`data/bots.csv`](data/bots.csv).
 - **Latest sandwiches:** every detected sandwich with links to the front-run, victim and back-run transactions.
 - **Daily charts** once there's more than one day of data.
 
-One early finding: most bots hand almost all of their gain to the block builder as gas, often 90% or more, in order to win their spot in the block.
+One finding so far: of the $46,668 gain with a known dollar value (Oct 12 to Nov 4, 2026), bots spent 45% on gas and 41% on direct payments to builders, leaving about 14%. One bot checked by hand kept only 3% of its gain on its biggest trades.
 
 ## How it works
 
 [`scan.py`](scan.py) (Python, standard library only) runs every 2 hours. It reads every confirmed block since the previous run from a free public node ([publicnode.com](https://ethereum-rpc.publicnode.com)) and looks at the swap events of Uniswap V2/V3-style pools. A sandwich is counted when:
 
-1. the same bot (same sender, or the same private contract) trades a pool,
+1. the same wallet trades a pool,
 2. at least one other trader then swaps the same pool in the same direction,
-3. the bot then sells back roughly what it bought (within 10%).
+3. that wallet then sells back roughly what it bought (within 10%).
+
+Two different wallets using one contract are only counted if they also pay the builder directly, because otherwise they're usually just two people using the same public contract.
 
 Contracts used by several different wallets in the same block (routers and aggregators) don't count as a bot. Transactions that also add or remove liquidity in the pool ("just-in-time liquidity", a different strategy) are skipped. If the bot traded other pools in the same transaction, the sandwich is counted but its gain is shown as "complex", because this pool alone doesn't show what it made. Gains in ETH, USDC, USDT or DAI are converted to dollars with the ETH price from CoinGecko.
+
+Direct payments to builders are read from transaction traces (via [drpc.org](https://eth.drpc.org)), because they're internal transfers that receipts don't show. They're valued at that day's ETH price.
 
 ## Limits
 
 - Covers Uniswap V2/V3-style pools (Uniswap, SushiSwap and forks). Uniswap V4, Curve, Balancer and sandwiches across several pools are not detected.
-- "Gas" includes the priority tip paid to the builder. Some bots also pay builders with a direct transfer, which isn't visible in receipts, so real profits are **lower** than shown.
+- "Gas" includes the priority tip paid to the builder. "To builders" only catches ETH sent to the block's own builder address; payments in other tokens or to another address are missed, so real profits can be **lower** than shown.
+- A bot's gain is measured on one pool. A bot that also moves inventory elsewhere can show a gain it didn't really keep, so "Left" is an estimate, not an audited profit.
+- Sandwiches in other tokens or across several pools have no dollar value and aren't in the $ totals.
 - Failed or outbid attempts never reach the chain, so the full cost of competing isn't visible.
 - This repository contains the page, the scanner, the latest summary (`data/mev.js`) and the all-time bot table (`data/bots.csv`). The day-by-day history is kept forever but stays local.
 - Scans run on a Mac every 2 hours; if it sleeps for more than about 3 hours, the blocks from that stretch are never scanned, so totals are a lower bound on activity.
 
 ## Changelog
 
+- **2026-11-04:** Direct payments to builders are now traced and subtracted, for all history. Stricter bot detection (same wallet on both sides, or a direct builder payment) removes public contracts from the leaderboard. Fixed 24-hour totals that stopped counting after 150 sandwiches.
 - **2026-10-29:** "All time" tab in Who Profits with first/last seen dates, a CSV download of every bot, and the scan history is no longer deleted after 30 days.
 - **2026-10-12:** First version: live gas tiles, hourly gas charts, sandwich detection, bot leaderboard, latest sandwiches.
 

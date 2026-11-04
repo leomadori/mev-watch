@@ -249,16 +249,16 @@ function main() {
   }
 
   // ---------- Sandwich summary ----------
-  const r24 = D.recent, priced = r24.filter((s) => s.gross_usd != null);
-  const gross = priced.reduce((a, s) => a + s.gross_usd, 0), gas = priced.reduce((a, s) => a + (s.gas_usd || 0), 0);
+  const r24 = D.recent, { gross, gas, builder } = D.totals_24h;
   const coverH = D.blocks_24h * 12 / 3600;
   $("sandTiles").append(
     tile("SANDWICHES", D.count_24h.toLocaleString("en-US"), `last 24h${coverH < 23 ? ` (only ${coverH.toFixed(1)}h scanned so far)` : ""}`),
-    tile("VICTIM TRADES", r24.reduce((a, s) => a + s.victims.length, 0).toLocaleString("en-US"), "swaps caught in the middle"),
-    tile("BOTS ACTIVE", new Set(r24.map((s) => s.bot)).size, "distinct bot contracts"),
+    tile("VICTIM TRADES", D.totals_24h.victims.toLocaleString("en-US"), "swaps caught in the middle"),
+    tile("BOTS ACTIVE", D.totals_24h.bots, "distinct bot contracts"),
     tile("TAKEN (GROSS)", usd(gross, 0), "bot gain on the trades"),
     tile("PAID AS GAS", usd(gas, 0), gross > 0 ? `${Math.round(100 * gas / gross)}% of the take` : ""),
-    tile("LEFT FOR BOTS", usd(gross - gas, 0), "before any direct builder payment"));
+    tile("PAID TO BUILDERS", usd(builder, 0), gross > 0 ? `${Math.round(100 * builder / gross)}% of the take, sent directly` : ""),
+    tile("LEFT FOR BOTS", usd(gross - gas - builder, 0), "after gas and builder payments"));
 
   // ---------- How it works + a real example ----------
   const how = $("how");
@@ -268,7 +268,7 @@ function main() {
    "A bot sees it before it is confirmed and buys TOKEN first (the front-run). That pushes the price up.",
    "Your swap goes through at the worse price, still inside your slippage limit, and pushes the price up further.",
    "Right after you, the bot sells its TOKEN (the back-run) at the higher price. The difference is its profit, paid by you.",
-   "To make sure the three trades land in exactly this order, the bot bids for the spot: most of the profit goes to the block builder as gas."]
+   "To make sure the three trades land in exactly this order, the bot bids for the spot: most of the profit goes to the block builder, as gas and as a direct ETH payment."]
     .forEach((t) => ol.append(el("li", null, t)));
   how.append(ol);
   const ex = D.example;
@@ -284,8 +284,8 @@ function main() {
                row(ex.victims.length > 1 ? `2. ${ex.victims.length} victims` : "2. Victim", "vic", "swap at the worse price:", ex.victims),
                row("3. Bot", "bot", "sells right after:", [ex.back]));
     const res = el("div");
-    res.append(`Result: bot gained ${usd(ex.gross_usd)}, paid ${usd(ex.gas_usd)} in gas `
-      + `→ ${usd(ex.gross_usd - (ex.gas_usd || 0))} left. Bot contract: `, link(ES + "address/" + ex.bot, short(ex.bot)));
+    res.append(`Result: bot gained ${usd(ex.gross_usd)}, paid ${usd(ex.gas_usd)} in gas and ${usd(ex.builder_usd || 0)} directly to the builder `
+      + `→ ${usd(ex.gross_usd - (ex.gas_usd || 0) - (ex.builder_usd || 0))} left. Bot contract: `, link(ES + "address/" + ex.bot, short(ex.bot)));
     box.append(res);
     how.append(box);
   }
@@ -297,16 +297,16 @@ function main() {
     const t = $("bots"); t.replaceChildren();
     const rows = D[key];
     const hd = el("tr");
-    [["#"], ["Bot contract"], ["Sandwiches", 1], ["Victims", 1], ["Gross", 1], ["Gas paid", 1], ["Left after gas", 1], ["Kept", 1], ["First seen"], ["Last seen"]]
+    [["#"], ["Bot contract"], ["Sandwiches", 1], ["Victims", 1], ["Gross", 1], ["Gas paid", 1], ["To builders", 1], ["Left", 1], ["Kept", 1], ["First seen"], ["Last seen"]]
       .forEach(([h, n]) => hd.append(el("th", n ? "num" : null, h)));
     t.append(hd);
-    if (!rows.length) { const tr = el("tr"), td = el("td", "empty", "No sandwiches found yet."); td.colSpan = 10; tr.append(td); t.append(tr); return; }
+    if (!rows.length) { const tr = el("tr"), td = el("td", "empty", "No sandwiches found yet."); td.colSpan = 11; tr.append(td); t.append(tr); return; }
     const day = (iso) => new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric" });
     rows.forEach((b, i) => {
-      const tr = el("tr"), net = b.gross_usd - b.gas_usd, a = el("td");
+      const tr = el("tr"), net = b.gross_usd - b.gas_usd - (b.builder_usd || 0), a = el("td");
       a.append(link(ES + "address/" + b.bot, short(b.bot)));
       tr.append(el("td", null, i + 1), a, el("td", "num", b.count), el("td", "num", b.victims),
-        el("td", "num", usd(b.gross_usd)), el("td", "num", usd(b.gas_usd)),
+        el("td", "num", usd(b.gross_usd)), el("td", "num", usd(b.gas_usd)), el("td", "num", usd(b.builder_usd || 0)),
         el("td", "num " + (net >= 0 ? "pos" : "neg"), usd(net)),
         el("td", "num", b.gross_usd > 0 ? Math.round(100 * net / b.gross_usd) + "%" : "—"),
         el("td", null, b.first_seen ? day(b.first_seen) : "—"), el("td", null, b.last_seen ? day(b.last_seen) : "—"));
@@ -341,7 +341,7 @@ function main() {
   function recentTable() {
     const t = $("recent"); t.replaceChildren();
     const hd = el("tr");
-    [["Time"], ["Pool"], ["Bot"], ["Victims", 1], ["Bot gain", 1], ["Gas", 1], ["Left", 1], ["Txs"]]
+    [["Time"], ["Pool"], ["Bot"], ["Victims", 1], ["Bot gain", 1], ["Gas", 1], ["To builder", 1], ["Left", 1], ["Txs"]]
       .forEach(([h, n]) => hd.append(el("th", n ? "num" : null, h)));
     t.append(hd);
     for (const s of r24.slice(0, showN)) {
@@ -349,13 +349,13 @@ function main() {
       bot.append(link(ES + "address/" + s.bot, short(s.bot)));
       txs.append(link(ES + "tx/" + s.front, "front"), " · ", link(ES + "tx/" + s.victims[0], "victim"), " · ", link(ES + "tx/" + s.back, "back"));
       const gain = s.gross_usd != null ? usd(s.gross_usd) : s.complex ? "complex" : `${s.profit_amount.toLocaleString("en-US", { notation: "compact", maximumSignificantDigits: 3 })} ${s.profit_token}`;
-      const left = s.gross_usd != null ? s.gross_usd - (s.gas_usd || 0) : null;
+      const left = s.gross_usd != null ? s.gross_usd - (s.gas_usd || 0) - (s.builder_usd || 0) : null;
       tr.append(el("td", null, new Date(s.time).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })),
-        el("td", null, s.pair), bot, el("td", "num", s.victims.length), el("td", "num", gain), el("td", "num", usd(s.gas_usd)),
+        el("td", null, s.pair), bot, el("td", "num", s.victims.length), el("td", "num", gain), el("td", "num", usd(s.gas_usd)), el("td", "num", usd(s.builder_usd)),
         el("td", "num " + (left == null ? "" : left >= 0 ? "pos" : "neg"), usd(left)), txs);
       t.append(tr);
     }
-    if (!r24.length) { const tr = el("tr"), td = el("td", "empty", "No sandwiches found yet."); td.colSpan = 8; tr.append(td); t.append(tr); }
+    if (!r24.length) { const tr = el("tr"), td = el("td", "empty", "No sandwiches found yet."); td.colSpan = 9; tr.append(td); t.append(tr); }
     const m = $("recentMore"); m.replaceChildren();
     if (r24.length > showN) { const b = el("button", "more", `[ show ${Math.min(r24.length, 150) - showN} more » ]`); b.onclick = () => { showN = 150; recentTable(); }; m.append(b); }
   }
@@ -363,11 +363,14 @@ function main() {
 
   // ---------- Footer ----------
   const f = $("footer"), ul = el("ul", "small");
-  ["Sandwiches are detected from confirmed blocks: the same bot trades the same pool right before and right after "
-     + "another trader going the same way, and sells back roughly what it bought. Covers Uniswap V2/V3-style pools "
+  if (D.untraced) ul.append(el("li", null, `${D.untraced.toLocaleString("en-US")} sandwiches have not been checked for builder payments yet, so “Left” is still too high for them.`));
+  ["Sandwiches are detected from confirmed blocks: the same wallet trades the same pool right before and right after "
+     + "another trader going the same way, and sells back roughly what it bought. Two wallets using one contract only count "
+     + "if they also pay the builder directly. Covers Uniswap V2/V3-style pools "
      + "(Uniswap, SushiSwap and forks); Uniswap V4, Curve, Balancer and multi-pool sandwiches are not detected.",
-   "“Gas” is everything the bot paid in transaction fees, including the priority tip that goes to the builder. "
-     + "Some bots also pay builders with a direct transfer, which is not visible here, so real profits are lower than shown.",
+   "“Gas” is what the bot paid in transaction fees, including the priority tip. “To builders” is ETH it sent straight to "
+     + "the block's builder inside its transactions, read from transaction traces and valued at that day's ETH price. "
+     + "Payments in other tokens or to another address are not caught, so real profits can be lower still.",
    "Only gains in ETH, USDC, USDT or DAI get a dollar value; others show the token amount. \u201CComplex\u201D means the bot "
      + "also traded other pools in the same transaction, so its gain can't be read from this pool alone. "
      + "Transactions that add or remove liquidity (\u201Cjust-in-time liquidity\u201D, a different strategy) are not counted.",

@@ -7,8 +7,8 @@ classic sandwich pattern on Uniswap V2/V3-style pools:
     bot buys  ->  victim(s) buy the same way  ->  bot sells back what it bought
 
 Every block since the previous run is scanned (capped at MAX_BLOCKS), so with a run every two hours
-nothing is skipped. Profit is estimated from the swap amounts minus the gas the bot paid. Direct
-payments to block builders are not visible in receipts, so real net profit is lower than shown.
+nothing is skipped. Profit is the swap gain minus the gas the bot paid and the ETH it sent straight to
+the block builder (internal transfers, read from transaction traces).
 
 Usage: python3 scan.py           (writes data/mev.js + data/mev.json; history stays in data/mev_history/)
 """
@@ -30,6 +30,8 @@ RPCS = ["https://ethereum-rpc.publicnode.com", "https://eth.llamarpc.com"]
 MAX_BLOCKS = 900                     # ~3 hours of blocks; one run never takes more than a few minutes
 FIRST_RUN_BLOCKS = 300               # ~1 hour on the very first run
 BATCH = 10
+TRACE_RPC = "https://eth.drpc.org"   # the public node above has no traces; free plan allows batches of 3
+TRACE_SECONDS = 8 * 60               # per run; whatever is left is picked up by the next run
 
 SWAP_V2 = "0xd78ad95fa46c994b6551d0da85fc275fe613ce37657fb8d5e3d130840159d822"
 SWAP_V3 = "0xc42079f94a6350d7e6235f29174924f928cc2ac818eb64fed8004e115fbcca67"
@@ -199,6 +201,64 @@ def find_sandwiches(swaps, shared):
     return found
 
 
+# ---------- builder payments ----------
+
+def is_bot(s):
+    """Two wallets through one public contract are just two traders, unless they pay the builder like a bot does."""
+    return s["back_eoa"] == s["bot_eoa"] or bool(s.get("builder_eth"))
+
+
+def paid_to_builder(trace, miner):
+    """ETH (not wei) sent to `miner` by successful plain calls in a trace_transaction result."""
+    reverted = [t["traceAddress"] for t in trace if t.get("error")]
+    wei = 0
+    for t in trace:
+        a = t.get("action", {})
+        # delegatecall traces repeat the parent's value without moving any ETH, so only plain calls count.
+        if t.get("type") != "call" or a.get("callType") != "call" or (a.get("to") or "").lower() != miner:
+            continue
+        if not any(t["traceAddress"][:len(r)] == r for r in reverted):
+            wei += int(a.get("value", "0x0"), 16)
+    return wei / 1e18
+
+
+def fill_builder_payments(eth_usd):
+    """Add builder_eth/builder_usd to priced sandwiches that don't have them yet, oldest first, within TRACE_SECONDS."""
+    deadline = time.time() + TRACE_SECONDS
+    for f in sorted(HIST.glob("*.json")):
+        d = load_json(f, {})
+        ss = d.get("sandwiches", [])
+        todo = [s for s in ss if s["gross_usd"] is not None and "builder_eth" not in s]
+        if not todo:
+            continue
+        # That day's ETH price, read off its WETH sandwiches; today's price is only the fallback.
+        prices = sorted(s["gross_usd"] / s["profit_amount"] for s in ss
+                        if s["profit_token"] == "WETH" and s["gross_usd"] and s["profit_amount"])
+        price = prices[len(prices) // 2] if prices else eth_usd
+        stop = False
+        for s in todo:
+            if time.time() > deadline:
+                stop = True
+                break
+            calls = [("eth_getBlockByNumber", [hex(s["block"]), False]),
+                     ("trace_transaction", [s["front"]]), ("trace_transaction", [s["back"]])]
+            try:
+                out = post(TRACE_RPC, [{"jsonrpc": "2.0", "id": i, "method": m, "params": p}
+                                       for i, (m, p) in enumerate(calls)])
+                blk, front, back = (next(x.get("result") for x in out if x["id"] == i) for i in range(3))
+            except Exception as e:  # noqa: BLE001 - node down or rate-limited: keep what we have, retry next run
+                print(f"  tracing stopped: {e}", flush=True)
+                stop = True
+                break
+            if blk and front is not None and back is not None:
+                miner = blk["miner"].lower()
+                s["builder_eth"] = round(paid_to_builder(front, miner) + paid_to_builder(back, miner), 8)
+                s["builder_usd"] = round(s["builder_eth"] * price, 2) if price else None
+        f.write_text(json.dumps(d))
+        if stop:
+            return
+
+
 # ---------- main ----------
 
 def eth_price_usd():
@@ -260,7 +320,7 @@ def scan(start, end, eth_usd, cache):
         pair = "/".join(cache["tokens"].get(t, ["?"])[0] for t in toks) if toks else pool[:10]
         out.append({
             "block": n, "time": datetime.fromtimestamp(ts, timezone.utc).isoformat(timespec="seconds"),
-            "pool": pool, "pair": pair, "bot": a["from"] if a["to"] in shared or not a["to"] else a["to"], "bot_eoa": a["from"],
+            "pool": pool, "pair": pair, "bot": a["from"] if a["to"] in shared or not a["to"] else a["to"], "bot_eoa": a["from"], "back_eoa": c["from"],
             "front": a["hash"], "back": c["hash"], "victims": [v["hash"] for v in victims],
             "profit_token": sym, "profit_amount": round(amount, 8), "complex": complex_,
             "gross_usd": round(gross, 2) if gross is not None else None,
@@ -305,6 +365,7 @@ def main():
     state.setdefault("first_scan", datetime.now(timezone.utc).isoformat(timespec="seconds"))
     STATE.write_text(json.dumps(state))
     TOKENS.write_text(json.dumps(cache))
+    fill_builder_payments(eth_usd)
     build_output(eth_usd)
     print(f"Done: {len(sandwiches)} sandwiches in {head - start + 1} blocks.")
 
@@ -313,18 +374,20 @@ def build_output(eth_usd):
     """Summarise history into data/mev.js for the page."""
     now = datetime.now(timezone.utc)
     days = {f.stem: load_json(f, {}) for f in sorted(HIST.glob("*.json"))}
-    all_s = [s for d in days.values() for s in d.get("sandwiches", [])]
+    for d in days.values():
+        d["sandwiches"] = [s for s in d.get("sandwiches", []) if is_bot(s)]
+    all_s = [s for d in days.values() for s in d["sandwiches"]]
     cutoff = (now - timedelta(hours=24)).isoformat()
     last24 = sorted((s for s in all_s if s["time"] >= cutoff), key=lambda s: s["time"], reverse=True)
 
     def net(s):
-        return None if s["gross_usd"] is None else s["gross_usd"] - (s["gas_usd"] or 0)
+        return None if s["gross_usd"] is None else s["gross_usd"] - (s["gas_usd"] or 0) - (s.get("builder_usd") or 0)
 
     def bots(items):
         agg = {}
         for s in items:
             b = agg.setdefault(s["bot"], {"bot": s["bot"], "count": 0, "victims": 0, "gross_usd": 0.0,
-                                          "gas_usd": 0.0, "unpriced": 0, "first_seen": s["time"], "last_seen": s["time"]})
+                                          "gas_usd": 0.0, "builder_usd": 0.0, "unpriced": 0, "first_seen": s["time"], "last_seen": s["time"]})
             b["first_seen"], b["last_seen"] = min(b["first_seen"], s["time"]), max(b["last_seen"], s["time"])
             b["count"] += 1
             b["victims"] += len(s["victims"])
@@ -333,9 +396,10 @@ def build_output(eth_usd):
             else:
                 b["gross_usd"] += s["gross_usd"]
                 b["gas_usd"] += s["gas_usd"] or 0
-        rows = sorted(agg.values(), key=lambda b: b["gross_usd"] - b["gas_usd"], reverse=True)
+                b["builder_usd"] += s.get("builder_usd") or 0
+        rows = sorted(agg.values(), key=lambda b: b["gross_usd"] - b["gas_usd"] - b["builder_usd"], reverse=True)
         for b in rows:
-            b["gross_usd"], b["gas_usd"] = round(b["gross_usd"], 2), round(b["gas_usd"], 2)
+            b["gross_usd"], b["gas_usd"], b["builder_usd"] = (round(b[k], 2) for k in ("gross_usd", "gas_usd", "builder_usd"))
         return rows
 
     daily = []
@@ -366,9 +430,14 @@ def build_output(eth_usd):
         "first_scan": load_json(STATE, {}).get("first_scan"),
         "blocks_24h": sum(h["blocks"] for h in gas if h["hour"] >= (now - timedelta(hours=24)).strftime("%Y-%m-%dT%H:00Z")),
         "recent": last24[:150], "count_24h": len(last24), "example": biggest,
+        "totals_24h": {"victims": sum(len(s["victims"]) for s in last24), "bots": len({s["bot"] for s in last24}),
+                       "gross": sum(s["gross_usd"] or 0 for s in last24),
+                       "gas": sum(s["gas_usd"] or 0 for s in last24 if s["gross_usd"] is not None),
+                       "builder": sum(s.get("builder_usd") or 0 for s in last24 if s["gross_usd"] is not None)},
         "bots_24h": bots(last24)[:15], "bots_7d": bots([s for s in all_s if s["time"] >= week_cut])[:15],
         "bots_all": all_bots[:50], "bots_all_count": len(all_bots),
         "daily": daily, "gas": gas,
+        "untraced": sum(s["gross_usd"] is not None and "builder_eth" not in s for s in all_s),
     }
     (DATA / "mev.json").write_text(json.dumps(out, indent=1))
     (DATA / "mev.js").write_text("window.MEV_DATA = " + json.dumps(out) + ";\n")
@@ -378,12 +447,12 @@ def write_csv(rows):
     """Every bot ever seen, for spreadsheets: data/bots.csv."""
     with open(DATA / "bots.csv", "w", newline="") as f:
         w = csv.writer(f)
-        w.writerow(["bot_contract", "sandwiches", "victims", "gross_usd", "gas_usd", "left_after_gas_usd", "kept_pct",
+        w.writerow(["bot_contract", "sandwiches", "victims", "gross_usd", "gas_usd", "builder_usd", "left_usd", "kept_pct",
                     "sandwiches_without_usd", "first_seen_utc", "last_seen_utc"])
         for b in rows:
-            left = round(b["gross_usd"] - b["gas_usd"], 2)
+            left = round(b["gross_usd"] - b["gas_usd"] - b["builder_usd"], 2)
             kept = round(100 * left / b["gross_usd"], 1) if b["gross_usd"] > 0 else ""
-            w.writerow([b["bot"], b["count"], b["victims"], b["gross_usd"], b["gas_usd"], left, kept,
+            w.writerow([b["bot"], b["count"], b["victims"], b["gross_usd"], b["gas_usd"], b["builder_usd"], left, kept,
                         b["unpriced"], b["first_seen"], b["last_seen"]])
 
 
